@@ -14,5 +14,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('dashboard');
 });
+
+Route::post('/populate', 'dashboardController@populate')->name('populate');
+Route::post('/sendMessage', 'messageController@sendMessage')->name('sendMessage');

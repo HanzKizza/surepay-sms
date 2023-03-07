@@ -1,0 +1,16 @@
+#dashboard_nav{
+    background-color: #2e3192;
+}
+
+.menu-items .menu-item{
+    padding-top: 5px;
+    padding-bottom: 5px;
+    background-color: rgba(0, 0, 0, 0.171);
+    margin-top: 5%;
+}
+
+.menu-items .menu-item:hover{
+    background-color: blue;
+    color: #18d26e !important;;
+    cursor: pointer;
+}
