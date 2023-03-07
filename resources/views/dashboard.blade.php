@@ -94,7 +94,7 @@
     $(document).ready(function(){
         $.post("/populate", {
             '_token': "{{ csrf_token() }}",
-            page: "singlesms"
+            page: "bulksms"
         },
         function(data, status) {
             $("#main").html(data)
