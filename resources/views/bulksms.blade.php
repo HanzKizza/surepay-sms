@@ -59,9 +59,12 @@
                             <button type="submit" onclick="addToRecipient()" class="btn btn-success py-0 px-2"><i class="fa fa-plus"></i></button>
                         </div>
                         <div class="row">
-                            <div class="card-body d-flex" id="receipientList">
-                                
-                            </div>
+                            <div class="card-body" id="receipientList" style="display:grid; grid-template-columns: auto auto auto auto;"></div>
+                        </div>
+                        <div class="card-footer bg-success">
+                            <form method="post" enctype="multipart/form-data" class="d-flex">
+                                <input type="file" name="contacts" id="contacts" class="form-control">
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -91,7 +94,7 @@
     }
 
     function renderReceipient(value){
-        $("#receipientList").prepend("<label class='p-1 mx-2 px-3 bg-info text-white rounded-3'>"+value+"</label>")
+        $("#receipientList").prepend("<label class='p-1 mx-2 mt-1 px-3 bg-info text-white rounded-3 text-center'>"+value+"</label>")
     }
 
     function sendMessage(e){
