@@ -61,9 +61,10 @@
                         <div class="row">
                             <div class="card-body" id="receipientList" style="display:grid; grid-template-columns: auto auto auto auto;"></div>
                         </div>
-                        <div class="card-footer bg-success">
+                        <div class="card-footer py-0 px-0">
                             <form method="post" enctype="multipart/form-data" class="d-flex">
-                                <input type="file" name="contacts" id="contacts" class="form-control">
+                                <input type="file" name="contacts" id="contacts" class="form-control w-100" style="width: 99% !important;">
+                                <button type="submit" class="btn btn-outline-success py-0 px-2" ><i class="fa fa-upload"></i></button>
                             </form>
                         </div>
                     </div>
