@@ -39,12 +39,16 @@
                             <span>Phonebook</span>
                         </div>
                         <div class="menu-item d-flex align-items-center text-white" id="singlesms" onclick="populate(this)">
-                            <i class="fa fa-home mx-3" style="width:15px"></i> 
+                            <i class="fa fa-sms mx-3" style="width:15px"></i> 
                             <span>Single sms</span>
                         </div>
                         <div class="menu-item d-flex align-items-center text-white" id="bulksms" onclick="populate(this)">
-                            <i class="fa fa-home mx-3" style="width:15px"></i> 
+                            <i class="fa fa-comments mx-3" style="width:15px"></i> 
                             <span>Bulk sms</span>
+                        </div>
+                        <div class="menu-item d-flex align-items-center text-white" id="customsms" onclick="populate(this)">
+                            <i class="fa fa-chess-queen mx-3" style="width:15px"></i> 
+                            <span>Custom sms</span>
                         </div>
                     </div>
                 </div>
@@ -91,14 +95,14 @@
         );
     }
 
-    $(document).ready(function(){
-        $.post("/populate", {
-            '_token': "{{ csrf_token() }}",
-            page: "bulksms"
-        },
-        function(data, status) {
-            $("#main").html(data)
-        }
-        );
-    })
+    // $(document).ready(function(){
+    //     $.post("/populate", {
+    //         '_token': "{{ csrf_token() }}",
+    //         page: "bulksms"
+    //     },
+    //     function(data, status) {
+    //         $("#main").html(data)
+    //     }
+    //     );
+    // })
 </script>

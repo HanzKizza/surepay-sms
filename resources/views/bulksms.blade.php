@@ -33,12 +33,12 @@
                         </div>
                         <div class="row">
                             <div class="card-body">
-                                <form id="sendMessageForm" onsubmit="sendMessage(event)">
+                                <form id="sendMessageForm" onsubmit="sendBulkMessage(event)">
                                 <!-- <form id="sendMessageForm" method="post" action="{{ route('sendMessage') }}"> -->
                                     <input type="text" name="sender" id="sender" class="form-control d-none" value="surepay"/>
                                     <input type="text" name="clientId" id="clientId" class="form-control d-none" value="1"/>
                                     <h6 class="mt-3">Message</h6>
-                                    <textarea name="message" id="message" rows="10" class="form-control"></textarea>
+                                    <textarea name="message" id="message" rows="10" class="form-control" required></textarea>
                                     <div class="server-response"></div>
                                     <div class="d-flex flex-row-reverse my-3">
                                         <button class="btn btn-outline-success w-25" type="submit">Send</button>
@@ -55,15 +55,16 @@
                     <div class="card w-100">
                         <div class="card-header bg-danger text-white d-flex align-items-center">
                             <h5 style="margin-right: 30px;">Receipients</h5>
-                            <input type="text" id="receipient" name="phoneNumber" class="form-control w-50 mx-2 bg-white text-success py-1" placeholder="Phone Number" />
+                            <input type="tel" id="receipient" name="phoneNumber" class="form-control w-50 mx-2 bg-white text-success py-1" placeholder="Phone Number" />
                             <button type="submit" onclick="addToRecipient()" class="btn btn-success py-0 px-2"><i class="fa fa-plus"></i></button>
+                            <div class="totalReceipients bg-dark text-center rounded-circle" style="position:absolute; height: 20p; width:20px; right: 2%">4</div>
                         </div>
                         <div class="row">
                             <div class="card-body" id="receipientList" style="display:grid; grid-template-columns: auto auto auto auto;"></div>
                         </div>
                         <div class="card-footer py-0 px-0">
-                            <form method="post" enctype="multipart/form-data" class="d-flex">
-                                <input type="file" name="contacts" id="contacts" class="form-control w-100" style="width: 99% !important;">
+                            <form id="contactsUploadForm" method="post" enctype="multipart/form-data" class="d-flex" onsubmit="uploadContacts(event)">
+                                <input type="file" name="bulkContacts" id="contacts" class="form-control w-100" style="width: 99% !important;" required />
                                 <button type="submit" class="btn btn-outline-success py-0 px-2" ><i class="fa fa-upload"></i></button>
                             </form>
                         </div>
@@ -76,8 +77,12 @@
 
 
 <script>
+    receipients = new Array();
 
-    let receipients = new Array();
+    $(document).ready(function(){
+        $(".totalReceipients").text(receipients.length)
+    })
+
 
     function addToRecipient(){
         value = $("#receipient").val()
@@ -96,26 +101,47 @@
 
     function renderReceipient(value){
         $("#receipientList").prepend("<label class='p-1 mx-2 mt-1 px-3 bg-info text-white rounded-3 text-center'>"+value+"</label>")
+        $(".totalReceipients").text(receipients.length)
     }
 
-    function sendMessage(e){
+    function sendBulkMessage(e){
         e.preventDefault()
-        var formdata = new FormData(document.getElementById("sendMessageForm"))
+        // var formdata = new FormData(document.getElementById("sendMessageForm"))
+        // formdata.append('_token', "{{ csrf_token() }}")
+        message = $("#message").val()
+        sender = $("#sender").val()
+        clientId = $("#clientId").val()
+        if(receipients.length == 0){
+            alert("Add Receipients")
+        }
+        else{
+            $("#sendMessageForm .server-response").html('<i class="fa fa-spinner fa-spin" style="font-size: 25px; margin-right:9px"></i> <b>loading...</b>');
+            $.post("/sendBulkMessage", {message:message, sender:sender, clientId:clientId, phoneNumbers: JSON.stringify(receipients), "_token": "{{ csrf_token() }}"}, function(data, status){
+                $("#sendMessageForm .server-response").html(data);
+            })
+        }
+    }
+
+
+
+    function uploadContacts(e){
+        e.preventDefault()
+        var formdata = new FormData(document.getElementById("contactsUploadForm"))
         formdata.append('_token', "{{ csrf_token() }}")
-        $("#sendMessageForm .server-response").html('<i class="fa fa-spinner fa-spin" style="font-size: 25px; margin-right:9px"></i> <b>loading...</b>');
         $.ajax({
             type: "POST",
-            url: "/sendMessage",
+            url: "/uploadFromCsv",
             data: formdata,
             processData: false,
             contentType: false,
-            //headers: {'X-CSFR-TOKEN':$('meta[name="csrf-token"]').attr('content')},
             success: function (response) {
-                $("#sendMessageForm .server-response").html(response);
+                contacts = JSON.parse(response)
+                contacts.forEach((item, index) =>{
+                    receipients.push(item)
+                    renderReceipient(item)
+                })
             },
             error:function(response){
-                // alert(JSON.stringify(response))
-                // $("#sendMessageForm .server-response").html(response.text);
                 alert("Something went wrong, please try again later")
             }
         });

@@ -19,3 +19,7 @@ Route::get('/', function () {
 
 Route::post('/populate', 'dashboardController@populate')->name('populate');
 Route::post('/sendMessage', 'messageController@sendMessage')->name('sendMessage');
+Route::post('/sendBulkMessage', 'messageController@sendBulkMessage')->name('sendBulkMessage');
+Route::post('/sendCustomMessage', 'messageController@sendCustomMessage')->name('sendCustomMessage');
+Route::post('/generateCustomeMessages', 'fileController@generateCustomeMessages')->name('generateCustomeMessages');
+Route::post('/uploadFromCsv', 'fileController@uploadFromCsv')->name('uploadFromCsv');
