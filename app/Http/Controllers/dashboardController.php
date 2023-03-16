@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Models\message;
+
 
 class dashboardController extends Controller
 {
@@ -12,6 +15,8 @@ class dashboardController extends Controller
     }
 
     function loadOutBox(Request $request){
-        return view("outbox");
+        $clientId = $request->clientId;
+        $messages = DB::select("SELECT * FROM messages WHERE clientId = {$clientId} ORDER BY created_at DESC");
+        return view("outbox", ['messages' => $messages, 'clientId' => $clientId]); 
     }
 }
