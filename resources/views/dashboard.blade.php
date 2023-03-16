@@ -50,6 +50,10 @@
                             <i class="fa fa-chess-queen mx-3" style="width:15px"></i> 
                             <span>Custom sms</span>
                         </div>
+                        <div class="menu-item d-flex align-items-center text-white" id="outbox" onclick="outbox(1)">
+                            <i class="fas fa-inbox mx-3" style="width:15px"></i> 
+                            <span>Outbox</span>
+                        </div>
                     </div>
                 </div>
 
@@ -95,14 +99,21 @@
         );
     }
 
-    // $(document).ready(function(){
-    //     $.post("/populate", {
-    //         '_token': "{{ csrf_token() }}",
-    //         page: "bulksms"
-    //     },
-    //     function(data, status) {
-    //         $("#main").html(data)
-    //     }
-    //     );
-    // })
+
+    function outbox(clientId){
+        $.post("/loadOutBox", {
+                '_token': "{{ csrf_token() }}",
+                clientId: clientId
+            },
+            function(data, status) {
+                if(status == 'success'){
+                    $("#main").html(data)
+                }
+                else{
+                    alert("Page not found")
+                }
+            }
+        );
+    }
+
 </script>

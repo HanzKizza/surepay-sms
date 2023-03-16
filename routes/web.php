@@ -18,6 +18,7 @@ Route::get('/', function () {
 });
 
 Route::post('/populate', 'dashboardController@populate')->name('populate');
+Route::post('/loadOutBox', 'dashboardController@loadOutBox')->name('loadOutBox');
 Route::post('/sendMessage', 'messageController@sendMessage')->name('sendMessage');
 Route::post('/sendBulkMessage', 'messageController@sendBulkMessage')->name('sendBulkMessage');
 Route::post('/sendCustomMessage', 'messageController@sendCustomMessage')->name('sendCustomMessage');
