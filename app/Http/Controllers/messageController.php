@@ -15,8 +15,38 @@ class messageController extends Controller
         $message->message = $request->message;
         $message->clientId = $request->clientId;
         $message->sender = $request->sender;
-        $message->save();
-        DB::insert("insert into queue values (DEFAULT, {$message->id})");
+        // $message->save();
+        // DB::insert("insert into queue values (DEFAULT, {$message->id})");
+        // Encode the message object as JSON
+    $jsonMessage = json_encode($message);
+
+    // Set the URL of the external API
+    $url = 'https://api.example.com/send-message';
+
+    // Initialize curl
+    $ch = curl_init();
+
+    // Set curl options
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_POST, 1);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $jsonMessage);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+    // Execute the curl request
+    $response = curl_exec($ch);
+
+    // Close curl
+    curl_close($ch);
+
+    // Handle the response
+    if ($response === false) {
+        // Handle error
+    } else {
+        // Process response
+        // return $response;
+    }
+
         return json_encode($message);
     }
 
