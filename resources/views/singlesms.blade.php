@@ -60,7 +60,7 @@
         $("#sendMessageForm .server-response").html('<i class="fa fa-spinner fa-spin" style="font-size: 25px; margin-right:9px"></i> <b>loading...</b>');
         $.ajax({
             type: "POST",
-            url: "/uploadFromCsv",
+            url: "/sendMessage",
             data: formdata,
             processData: false,
             contentType: false,

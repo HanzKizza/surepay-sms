@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
 use App\Models\message;
 
 class messageController extends Controller
@@ -11,6 +12,7 @@ class messageController extends Controller
     //
     function sendMessage(Request $request){
         $message = new message();
+        $message->messageId = 1;
         $message->phoneNumber = $request->phoneNumber;
         $message->message = $request->message;
         $message->clientId = $request->clientId;
@@ -18,36 +20,7 @@ class messageController extends Controller
         // $message->save();
         // DB::insert("insert into queue values (DEFAULT, {$message->id})");
         // Encode the message object as JSON
-    $jsonMessage = json_encode($message);
-
-    // Set the URL of the external API
-    $url = 'https://api.example.com/send-message';
-
-    // Initialize curl
-    $ch = curl_init();
-
-    // Set curl options
-    curl_setopt($ch, CURLOPT_URL, $url);
-    curl_setopt($ch, CURLOPT_POST, 1);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, $jsonMessage);
-    curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
-    // Execute the curl request
-    $response = curl_exec($ch);
-
-    // Close curl
-    curl_close($ch);
-
-    // Handle the response
-    if ($response === false) {
-        // Handle error
-    } else {
-        // Process response
-        // return $response;
-    }
-
-        return json_encode($message);
+        return $this->postMessage($message);
     }
 
 
@@ -86,5 +59,42 @@ class messageController extends Controller
             DB::insert("insert into queue values (DEFAULT, {$message->id})");
         }
         // echo "Messages saved";
+    }
+
+
+    function postMessage(Message $message){
+        // Set the request URL
+        $url = "http://localhost:8090/messages/publish";
+
+        // Set the request headers
+        $headers = array(
+            "Content-Type: application/json"
+        );
+
+        $data = json_encode($message);
+
+        // Initialize a new cURL session
+        $curl = curl_init();
+
+        // Set the cURL options
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => $url,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_POST => true,
+            CURLOPT_POSTFIELDS => $data,
+            CURLOPT_HTTPHEADER => $headers
+        ));
+
+        // Execute the cURL request
+        $response = curl_exec($curl);  
+
+        if(curl_errno($curl)) {
+            $error_msg = curl_error($curl);
+            return $error_msg;
+        }else{
+            return("Messasge sent to queue");
+        }
+        // Close the cURL session
+        curl_close($curl);
     }
 }
