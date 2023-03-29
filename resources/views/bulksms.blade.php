@@ -57,10 +57,10 @@
                             <h5 style="margin-right: 30px;">Receipients</h5>
                             <input type="tel" id="receipient" name="phoneNumber" class="form-control w-50 mx-2 bg-white text-success py-1" placeholder="Phone Number" />
                             <button type="submit" onclick="addToRecipient()" class="btn btn-success py-0 px-2"><i class="fa fa-plus"></i></button>
-                            <div class="totalReceipients bg-dark text-center rounded-circle" style="position:absolute; height: 20p; width:20px; right: 2%">4</div>
+                            <div class="totalReceipients bg-dark text-center rounded-2 px-2" style="position:absolute; height: 20p; min-width:20px; right: 2%">4</div>
                         </div>
                         <div class="row">
-                            <div class="card-body" id="receipientList" style="display:grid; grid-template-columns: auto auto auto auto;"></div>
+                            <div class="card-body" id="receipientList" style="display:grid; grid-template-columns: auto auto auto auto; max-height: 550px; overflow:auto"></div>
                         </div>
                         <div class="card-footer py-0 px-0">
                             <form id="contactsUploadForm" method="post" enctype="multipart/form-data" class="d-flex" onsubmit="uploadContacts(event)">
