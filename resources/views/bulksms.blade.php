@@ -18,7 +18,7 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
         <script src="{{ asset('assets/js/dashboard.js') }}"></script>
         <link rel="stylesheet" href="{{ asset('assets/css/dashboard.css') }}">
         
@@ -64,8 +64,8 @@
                         </div>
                         <div class="card-footer py-0 px-0">
                             <form id="contactsUploadForm" method="post" enctype="multipart/form-data" class="d-flex" onsubmit="uploadContacts(event)">
-                                <input type="file" name="bulkContacts" id="contacts" class="form-control w-100" style="width: 99% !important;" required />
-                                <button type="submit" class="btn btn-outline-success py-0 px-2" ><i class="fa fa-upload"></i></button>
+                                <input type="file" onchange="uploadContacts2(this)" name="bulkContacts" id="contacts" class="form-control w-75" style="width: 99% !important;" required />
+                                <button type="reset" onclick="clearContacts()" class="btn btn-outline-danger py-0 px-2" >Clear</button>
                             </form>
                         </div>
                     </div>
@@ -77,10 +77,10 @@
 
 
 <script>
-    receipients = new Array();
+    var contacts = new Array()
 
     $(document).ready(function(){
-        $(".totalReceipients").text(receipients.length)
+        $(".totalReceipients").text(contacts.length)
     })
 
 
@@ -88,62 +88,105 @@
         value = $("#receipient").val()
         $("#receipient").val('')
         if(value != ""){
-            receipients.push(value)
-            renderReceipient(value)
+            contacts.push(value)
+            $(".totalReceipients").text(contacts.length)
+            $("#receipientList").prepend("<label class='p-1 mx-2 mt-1 px-3 bg-info text-white rounded-3 text-center'>"+value+"</label>")
         }
     }
 
-    function renderReceipients(){
-        receipients.forEach(function(value){
-            alert(value)
-        })
+
+    function renderReceipient(){
+        $(".totalReceipients").text(contacts.length)
+        for(i = 0; i < 100; i++){
+            if(i < contacts.length){
+                $("#receipientList").prepend("<label class='p-1 mx-2 mt-1 px-3 bg-info text-white rounded-3 text-center'>"+contacts[i]+"</label>")
+            }else{
+                break
+            }
+        }
     }
 
-    function renderReceipient(value){
-        $("#receipientList").prepend("<label class='p-1 mx-2 mt-1 px-3 bg-info text-white rounded-3 text-center'>"+value+"</label>")
-        $(".totalReceipients").text(receipients.length)
-    }
 
     function sendBulkMessage(e){
         e.preventDefault()
-        // var formdata = new FormData(document.getElementById("sendMessageForm"))
-        // formdata.append('_token', "{{ csrf_token() }}")
         message = $("#message").val()
         sender = $("#sender").val()
         clientId = $("#clientId").val()
-        if(receipients.length == 0){
-            alert("Add Receipients")
+        phoneNumbers = JSON.stringify(contacts)
+
+        if(contacts.length == 0){
+            alert("No Receipients Found")
         }
+
         else{
             $("#sendMessageForm .server-response").html('<i class="fa fa-spinner fa-spin" style="font-size: 25px; margin-right:9px"></i> <b>loading...</b>');
-            $.post("/sendBulkMessage", {message:message, sender:sender, clientId:clientId, phoneNumbers: JSON.stringify(receipients), "_token": "{{ csrf_token() }}"}, function(data, status){
-                $("#sendMessageForm .server-response").html(data);
-            })
+            formdata = new FormData()
+            formdata.append('_token', "{{ csrf_token() }}")
+            formdata.append('message', message)
+            formdata.append('sender', sender)
+            formdata.append('clientId', clientId)
+            formdata.append('phoneNumbers', phoneNumbers)
+            var retryCount = 0
+            $.ajax({
+                type: "POST",
+                url: "/sendBulkMessage",
+                data: formdata,
+                processData: false,
+                contentType: false,
+                timeout: 100000,
+                success: function (response) {
+                    retryCount = 0;
+                    $("#sendMessageForm .server-response").html(response);
+                },
+                error:function(response){
+                    if (retryCount < 1) { // retry only once
+                        retryCount++;
+                        $.ajax(this); // retry with the same settings
+                    } else {
+                        alert("Something went wrong, please try again later")
+                    }
+                }
+            });
         }
     }
 
 
+    function uploadContacts2(el){
+        fileInput = el
+        const file = fileInput.files[0]
 
-    function uploadContacts(e){
-        e.preventDefault()
-        var formdata = new FormData(document.getElementById("contactsUploadForm"))
-        formdata.append('_token', "{{ csrf_token() }}")
-        $.ajax({
-            type: "POST",
-            url: "/uploadFromCsv",
-            data: formdata,
-            processData: false,
-            contentType: false,
-            success: function (response) {
-                contacts = JSON.parse(response)
-                contacts.forEach((item, index) =>{
-                    receipients.push(item)
-                    renderReceipient(item)
-                })
+        Papa.parse(file, {
+            header: false,
+            dynmicTyping: true,
+            worker: true,
+            step: function(results){
+                 extractContacts(results.data)
             },
-            error:function(response){
-                alert("Something went wrong, please try again later")
+            complete: function(){
+                renderReceipient()
+                console.log('Finished parsing file')
+            },
+            error: function(){
+                console.error('Error parsing file')
             }
-        });
+        })
     }
+
+
+    function extractContacts(data) {
+        for (let i = 0; i < data.length; i++) {
+             var phoneNumber = data[i];
+            if (phoneNumber) {
+                contacts.push(phoneNumber);
+            }
+        }
+    }
+
+
+    function clearContacts(){
+        contacts = []
+        $("#receipientList").html("")
+        renderReceipient()
+    }
+
 </script>
