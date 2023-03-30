@@ -45,25 +45,29 @@ class messageController extends Controller
             // echo $this->postMessage($message);
         }
         echo $this->postBulkMessage($messages);
-        return "Messages sent";
+        // return "Messages sent";
     }
 
 
     function sendCustomMessage(Request $request){
+        $parsedMessages = array();
         $clientId = $request->clientId;
         $sender = $request->sender;
         $messages = json_decode($request->messages);
         foreach($messages as $data){
             $message = new message();
+            $message->messageId = 1;
             $message->phoneNumber = $data[0];
             $message->message = $data[1];
             $message->clientId = $clientId;
             $message->sender = $sender;
-            echo $message->message;
-            $message->save();
-            DB::insert("insert into queue values (DEFAULT, {$message->id})");
+            array_push($parsedMessages, $message);
+            // echo $message->message;
+            // $message->save();
+            // DB::insert("insert into queue values (DEFAULT, {$message->id})");
         }
         // echo "Messages saved";
+        echo $this->postBulkMessage($parsedMessages);
     }
 
 

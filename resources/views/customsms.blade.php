@@ -56,7 +56,7 @@
                 <div class="col-md-8">
                     <div class="card w-100">
                         <div class="card-header bg-danger text-white d-flex align-items-center flex-row-reverse">
-                        <button class="btn btn-outline-warning p-1 py-0" onclick="sendMessages()">Send <span class="badge">7</span></button>   
+                        <button class="btn btn-outline-warning p-1 py-0" onclick="sendMessages()">Send <span class="badge totalMessages">0</span></button>   
                         <input type="number" id="cliendId" value="1" class="d-none"/> 
                         <input type="text" id="sender" value="surepay" class="d-none"/> 
                         <h5 style="margin-right: 5%;">Generated SMS</h5>
@@ -88,6 +88,7 @@
     messages = ""; //this will be updated and used when finally sending messages
     function generateCustomMessages(e){
         e.preventDefault()
+        $("#generatedMessages tbody").html("")
         var formdata = new FormData(document.getElementById("customMessageGenerationForm"))
         formdata.append('_token', "{{ csrf_token() }}")
         $.ajax({
@@ -98,9 +99,14 @@
             contentType: false,
             success: function (response) {
                 messages = JSON.parse(response)
+                $(".totalMessages").text(messages.length)
+                
                 for(i = 0; i < messages.length; i++){
                     myHtml = "<tr><td>"+messages[i][0]+"</td><td>"+messages[i][1]+"</td></tr>";
                     $("#generatedMessages tbody").append(myHtml)
+                    if(i == 99){
+                        break;
+                    }
                 }
             },
             error:function(response){
@@ -111,15 +117,44 @@
 
 
     function sendMessages(){
+        formdata = new FormData()
         clientId = $("#clientId").val()
         sender = $("#sender").val()
+        formdata.append('messages', messages)
+        formdata.append('sender', sender)
+        formdata.append('clientId', clientId)
+        formdata.append('_token', "{{ csrf_token() }}")
+
         if(messages == "" || messages.length == 0 || messages == null){
             alert("Cannot send empty messages")
         }
         else{
-            $.post("/sendCustomMessage", {'_token': "{{ csrf_token() }}", messages: JSON.stringify(messages), clientId:clientId, sender:sender}, function(data, status){
-            alert(data)
-        })
+            formdata.append('messages', JSON.stringify(messages))
+            formdata.append('sender', sender)
+            formdata.append('clientId', clientId)
+            formdata.append('_token', "{{ csrf_token() }}")
+            var retryCount = 0
+            $.ajax({
+                type: "POST",
+                url: "/sendCustomMessage",
+                data: formdata,
+                processData: false,
+                contentType: false,
+                timeout: 100000,
+                success: function (response) {
+                    retryCount = 0
+                    alert(response)
+                    location.reload()
+                },
+                error:function(response){
+                    if (retryCount < 1) { // retry only once
+                        retryCount++;
+                        $.ajax(this); // retry with the same settings
+                    } else {
+                        alert("Something went wrong, please try again later")
+                    }
+                }
+            });
         }
     }
 </script>
