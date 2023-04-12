@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateQueueTable extends Migration
+class CreateAdminTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,13 @@ class CreateQueueTable extends Migration
      */
     public function up()
     {
-        Schema::create('queue', function (Blueprint $table) {
-            $table->id("queueId");
-            $table->integer("messageId");
+        Schema::create('admin', function (Blueprint $table) {
+            $table->id("admin_id");
+            $table->string("name");
+            $table->string("contact");
+            $table->string("email");
+            $table->string("status");
+            $table->timestamps();
         });
     }
 
@@ -26,6 +30,6 @@ class CreateQueueTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('queue');
+        Schema::dropIfExists('admin');
     }
 }

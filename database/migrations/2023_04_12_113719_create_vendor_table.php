@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMessageTable extends Migration
+class CreateVendorTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,13 @@ class CreateMessageTable extends Migration
      */
     public function up()
     {
-        Schema::create('message', function (Blueprint $table) {
-            $table->id("messageId");
-            $table->string("phoneNumber");
-            $table->string("message");
-            $table->string("userId");
-            $table->string("service");
-            $table->string("sender");
+        Schema::create('vendor', function (Blueprint $table) {
+            $table->id("vendorId");
+            $table->string("name");
+            $table->string("contact");
+            $table->string("email");
+            $table->string("credits");
+            $table->string("pwd");
             $table->string("status");
             $table->timestamps();
         });
@@ -32,6 +32,6 @@ class CreateMessageTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('message');
+        Schema::dropIfExists('vendor');
     }
 }
