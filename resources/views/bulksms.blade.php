@@ -173,6 +173,7 @@
     }
 
 
+    
     function extractContacts(data) {
         for (let i = 0; i < data.length; i++) {
              var phoneNumber = data[i];
