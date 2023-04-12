@@ -17,6 +17,11 @@ Route::get('/', function () {
     return view('dashboard');
 });
 
+
+Route::get('/vendor/register', function () {
+    return view('vendor.register');
+});
+
 Route::post('/populate', 'dashboardController@populate')->name('populate');
 Route::post('/loadOutBox', 'dashboardController@loadOutBox')->name('loadOutBox');
 Route::post('/sendMessage', 'messageController@sendMessage')->name('sendMessage');
