@@ -19,6 +19,7 @@ class CreateUserMigration extends Migration
             $table->string("userName");
             $table->string("contact");
             $table->string("email");
+            $table->string("pwd");
             $table->string("status");
             $table->timestamps();
         });

@@ -22,6 +22,12 @@ Route::get('/vendor/register', function () {
     return view('vendor.register');
 });
 
+Route::get('/vendor/login', function () {
+    return view('vendor.login');
+});
+
+Route::post('/vendor/verifyUser', 'vendorController@verifyUser')->name('verifyUser');
+
 Route::post('/populate', 'dashboardController@populate')->name('populate');
 Route::post('/loadOutBox', 'dashboardController@loadOutBox')->name('loadOutBox');
 Route::post('/sendMessage', 'messageController@sendMessage')->name('sendMessage');
