@@ -17,16 +17,22 @@ Route::get('/', function () {
     return view('dashboard');
 });
 
-
 Route::get('/vendor/register', function () {
     return view('vendor.register');
 });
-
 Route::get('/vendor/login', function () {
-    return view('vendor.login');
+    return view('vendor.login', ['error'=> false]);
 });
 
-Route::post('/vendor/verifyUser', 'vendorController@verifyUser')->name('verifyUser');
+
+Route::get('/user/login', function () {
+    return view('user.login', ['error'=> false]);
+});
+Route::post('/user/verifyUser', 'vendorController@verifyUser')->name('verifyUser');
+Route::get('/user/home', function () {
+    return view('user.home');
+});
+
 
 Route::post('/populate', 'dashboardController@populate')->name('populate');
 Route::post('/loadOutBox', 'dashboardController@loadOutBox')->name('loadOutBox');
