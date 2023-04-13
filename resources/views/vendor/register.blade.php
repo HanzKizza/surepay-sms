@@ -1,0 +1,1 @@
+<h1>Register A vendor</h1>

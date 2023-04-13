@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMessageTable extends Migration
+class CreateTransactionTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,15 @@ class CreateMessageTable extends Migration
      */
     public function up()
     {
-        Schema::create('message', function (Blueprint $table) {
-            $table->id("messageId");
-            $table->string("phoneNumber");
-            $table->string("message");
+        Schema::create('transaction', function (Blueprint $table) {
+            $table->id("transaction_id");
+            $table->integer("vendorId");
             $table->string("userId");
-            $table->string("service");
-            $table->string("sender");
+            $table->string("transRef");
+            $table->string("transType");
+            $table->string("creditsBefore");
+            $table->string("creditsAfter");
+            $table->string("details");
             $table->string("status");
             $table->timestamps();
         });
@@ -32,6 +34,6 @@ class CreateMessageTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('message');
+        Schema::dropIfExists('transaction');
     }
 }
