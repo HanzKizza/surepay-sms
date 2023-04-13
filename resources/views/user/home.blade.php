@@ -1,6 +1,3 @@
-@if(!session('user'))
-    {{ redirect()->to('/vendor/login')->send() }}
-@endif
 @extends('user.dashboard')
 @section('title', 'SurePay Home')
 

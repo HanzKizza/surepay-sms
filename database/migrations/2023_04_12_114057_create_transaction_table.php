@@ -17,6 +17,8 @@ class CreateTransactionTable extends Migration
             $table->id("transaction_id");
             $table->integer("vendorId");
             $table->string("userId");
+            $table->string("transRef");
+            $table->string("transType");
             $table->string("creditsBefore");
             $table->string("creditsAfter");
             $table->string("details");

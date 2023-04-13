@@ -18,6 +18,7 @@ class CreateAdminTable extends Migration
             $table->string("name");
             $table->string("contact");
             $table->string("email");
+            $table->string("pwd");
             $table->string("status");
             $table->timestamps();
         });
