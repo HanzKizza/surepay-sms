@@ -27,6 +27,8 @@ Route::get('/vendor/login', function () {
 });
 
 Route::post('/vendor/verifyUser', 'vendorController@verifyUser')->name('verifyUser');
+Route::post('/vendor/newVendor', 'VendorController@newVendor')->name('newVendor');
+
 
 Route::post('/populate', 'dashboardController@populate')->name('populate');
 Route::post('/loadOutBox', 'dashboardController@loadOutBox')->name('loadOutBox');
