@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB; // import the DB facade
 
 class vendorController extends Controller
 {
@@ -11,28 +12,27 @@ class vendorController extends Controller
     }
 
     function newVendor(Request $request){
-        //Extract data
-        $name = $request->name;
-        $email = $request->email;
-        $contact = $request->contact;
-        $password =$request->password;
+      // validate the form data
+      $validatedData = $request->validate([
+        'name' => 'required|max:255',
+        'email' => 'required|email|unique:vendor|max:255',
+        'password' => 'required|confirmed',
+        'contact' => 'required'
+    ]);
 
-         // validate the form data
-         $validatedData = $request->validate([
-            'name' => 'required|max:255',
-            'email' => 'required|email|unique:vendors|max:255',
-            'password' => 'required|confirmed',
-        ]);
+    // insert the form data into the database using the DB facade
+    DB::table('vendor')->insert([
+        'name' => $validatedData['name'],
+        'contact' =>$validatedData['contact'],
+        'email' => $validatedData['email'],
+        'pwd' => bcrypt($validatedData['password']),
+        'status' => 'active', // set default status to active
+        'credits' => 0, // set default credits to 0
+        'created_at' => now(),  
+        'updated_at' => now(),
+    ]);
 
-         // create a new Vendor object with the validated data
-         $vendor = new Vendor;
-        $vendor->name = $validatedData['name'];
-        $vendor->email = $validatedData['email'];   
-        $vendor->password = bcrypt($validatedData['password']); // hash the password
-    
-      
-       
-        
-        return $name;
+    // redirect to the thank-you page
+    return redirect('/thank-you');
     }
 }
