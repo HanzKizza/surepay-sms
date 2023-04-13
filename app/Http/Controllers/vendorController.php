@@ -33,6 +33,6 @@ class vendorController extends Controller
     ]);
 
     // redirect to the thank-you page
-    return redirect('/thank-you');
+    return redirect('/vendor/login');
     }
 }

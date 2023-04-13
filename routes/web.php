@@ -22,12 +22,25 @@ Route::get('/vendor/register', function () {
     return view('vendor.register');
 });
 
-Route::get('/vendor/login', function () {
-    return view('vendor.login');
-});
 
 Route::post('/vendor/verifyUser', 'vendorController@verifyUser')->name('verifyUser');
 Route::post('/vendor/newVendor', 'VendorController@newVendor')->name('newVendor');
+
+Route::get('/vendor/register', function () {
+    return view('vendor.register');
+});
+Route::get('/vendor/login', function () {
+    return view('vendor.login', ['error'=> false]);
+});
+
+
+Route::get('/user/login', function () {
+    return view('user.login', ['error'=> false]);
+});
+Route::post('/user/verifyUser', 'vendorController@verifyUser')->name('verifyUser');
+Route::get('/user/home', function () {
+    return view('user.home');
+});
 
 
 Route::post('/populate', 'dashboardController@populate')->name('populate');
