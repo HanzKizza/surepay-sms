@@ -73,8 +73,10 @@
                             <i class="fa fa-user pt-1 text-muted"></i>
                             <h6 class="mt-1 mx-2">{{ session('user')[0]->userName }}</h6>
 
-                            <i class="fa fa-briefcase text-muted" style="margin-right: 10px; padding-top: 5px"></i>
-                            <h6 class="mt-1 mx-2">{{ session('user')[0]->credits }}</h6>
+                            <a href="/user/topup" class="d-flex text-dark mx-2" style="text-decoration: none;">
+                                <i class="fa fa-briefcase text-muted" style="padding-top: 5px"></i>
+                                <h6 class="mt-1 mx-2">{{ session('user')[0]->credits }}</h6>
+                            </a>
 
                             <i class="fa fa-user-group text-muted" style="margin-right: 10px; padding-top: 5px"></i>
                             <h6 class="mt-1 mx-2">14</h6>

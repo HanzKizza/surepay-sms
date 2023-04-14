@@ -34,7 +34,9 @@ Route::get('/user/outbox', 'vendorController@loadOutBox');
 Route::get('/user/customsms', function (){ return view("/user/customsms"); });
 Route::get('/user/bulksms', function (){ return view("/user/bulksms"); });
 Route::get('/user/singlesms', function (){ return view("/user/singlesms"); });
+Route::get('/user/topup', function (){ return view("/user/topup"); });
 Route::get('/user/signout', 'vendorController@signout');
+Route::post('/user/creditTopup', 'vendorController@autoCreditTopup');
 
 
 
