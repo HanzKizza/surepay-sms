@@ -23,15 +23,17 @@ Route::get('/', function () {
 
 Route::get('/user/login', function () { return view('user.login', ['error'=> false]); });
 Route::post('/user/verifyUser', 'vendorController@verifyUser')->name('verifyUser');
-Route::get('/user/home', function () { return view('user.home'); });
-Route::get('/user/outbox', 'vendorController@loadOutBox');
-Route::get('/user/customsms', function (){ return view("/user/customsms"); });
-Route::get('/user/bulksms', function (){ return view("/user/bulksms"); });
-Route::get('/user/singlesms', function (){ return view("/user/singlesms"); });
-Route::get('/user/topup', function (){ return view("/user/topup"); });
 Route::get('/user/signout', 'vendorController@signout');
-Route::post('/user/creditTopup', 'vendorController@autoCreditTopup');
 
+Route::middleware(['call-function-for-users'])->group(function () {
+    Route::get('/user/home', function () { return view('user.home'); });
+    Route::get('/user/outbox', 'vendorController@loadOutBox');
+    Route::get('/user/customsms', function (){ return view("/user/customsms"); });
+    Route::get('/user/singlesms', function (){ return view("/user/singlesms"); });
+    Route::get('/user/bulksms', function (){ return view("/user/bulksms"); });
+    Route::post('/user/creditTopup', 'vendorController@autoCreditTopup');
+    Route::get('/user/topup', function (){ return view("/user/topup"); });
+});
 
 
 Route::get('/admin/login', function () { return view('/admin/login', ['error'=> false]); });
@@ -48,14 +50,16 @@ Route::get('/admin/signout', 'adminController@signout');
 
 Route::post('/vendor/verifyVendor', 'vendorController@verifyVendor')->name('verifyVendor');
 Route::post('/vendor/newVendor', 'VendorController@newVendor')->name('newVendor');
-Route::get('/vendor/home', function () {return view('vendor.home');});
 Route::get('/vendor/register', function () {return view('vendor.register');});
 Route::get('/vendor/login', function () {return view('vendor.login', ['error'=> false]);});
 Route::get('/vendor/signout', 'vendorController@vendorSignout');
-Route::get('/vendor/transactions', 'vendorController@getTransactions');
-Route::get('/vendor/users', 'vendorController@getUsers');
-Route::get('/vendor/adduser', function () {return view('vendor.adduser');});
-Route::post('/vendor/saveuser', 'vendorController@saveUser');
+Route::middleware(['call-function-for-vendors'])->group(function () {
+    Route::get('/vendor/home', function () {return view('vendor.home');});
+    Route::post('/vendor/saveuser', 'vendorController@saveUser');
+    Route::get('/vendor/adduser', function () {return view('vendor.adduser');});
+    Route::get('/vendor/transactions', 'vendorController@getTransactions');
+    Route::get('/vendor/users', 'vendorController@getUsers');
+});
 
 
 
