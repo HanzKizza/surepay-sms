@@ -48,7 +48,7 @@ Route::get('/admin/signout', 'adminController@signout');
 
 Route::post('/vendor/verifyVendor', 'vendorController@verifyVendor')->name('verifyVendor');
 Route::post('/vendor/newVendor', 'VendorController@newVendor')->name('newVendor');
-Route::get('/vendor/home', function () {return view('vendor.register');});
+Route::get('/vendor/home', function () {return view('vendor.home');});
 Route::get('/vendor/register', function () {return view('vendor.register');});
 Route::get('/vendor/login', function () {return view('vendor.login', ['error'=> false]);});
 Route::get('/vendor/signout', 'vendorController@vendorSignout');
