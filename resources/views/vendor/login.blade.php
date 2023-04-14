@@ -29,7 +29,7 @@
                             <h4 class="text-center">SurePay SMS Platform</h4>
                         </div>
                         <div class="card-body">
-                            <form method="POST" action="/vendor/verifyUser">
+                            <form method="POST" action="/vendor/verifyVendor">
                                 @csrf
                                 <label for="email">Email</label>
                                 <input type="email" name="email" id="email" placeholder="you@example.com" class="form-control my-1" required/>

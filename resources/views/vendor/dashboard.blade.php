@@ -1,3 +1,6 @@
+@if(!session('vendor'))
+    {{ redirect()->to('/vendor/login')->send() }}
+@endif
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
@@ -34,26 +37,31 @@
                     </div>
 
                     <div class="menu-items container-fluid my-4 p-0 pt-5">
-                        <div class="menu-item d-flex align-items-center text-white" id="phonebook" onclick="populate(this)">
+                        <!-- <a class="menu-item d-flex align-items-center text-white" id="phonebook">
                             <i class="fa fa-home mx-3" style="width:15px"></i> 
                             <span>Phonebook</span>
-                        </div>
-                        <div class="menu-item d-flex align-items-center text-white" id="singlesms" onclick="populate(this)">
+                        </a> -->
+                        <!-- <a class="menu-item d-flex align-items-center text-white" id="singlesms" href="/user/singlesms">
                             <i class="fa fa-sms mx-3" style="width:15px"></i> 
                             <span>Single sms</span>
-                        </div>
-                        <div class="menu-item d-flex align-items-center text-white" id="bulksms" onclick="populate(this)">
+                        </a> -->
+                        <!-- <a class="menu-item d-flex align-items-center text-white" id="bulksms" href="/user/bulksms">
                             <i class="fa fa-comments mx-3" style="width:15px"></i> 
                             <span>Bulk sms</span>
-                        </div>
-                        <div class="menu-item d-flex align-items-center text-white" id="customsms" onclick="populate(this)">
+                        </a> -->
+                        <!-- <a class="menu-item d-flex align-items-center text-white" id="customsms" href="/user/customsms">
                             <i class="fa fa-chess-queen mx-3" style="width:15px"></i> 
                             <span>Custom sms</span>
-                        </div>
-                        <div class="menu-item d-flex align-items-center text-white" id="outbox" onclick="outbox(1)">
+                        </a> -->
+                        <!-- <a class="menu-item d-flex align-items-center text-white" id="outbox" href="/user/outbox">
                             <i class="fas fa-inbox mx-3" style="width:15px"></i> 
                             <span>Outbox</span>
-                        </div>
+                        </a> -->
+
+                        <a class="menu-item d-flex align-items-center text-white mt-5" id="outbox" href="/vendor/signout" style="background-color: orangered;">
+                            <i class="fa fa-arrow-left mx-3" style="width:15px"></i> 
+                            <span>Logout</span>
+                        </a>
                     </div>
                 </div>
 
@@ -63,15 +71,17 @@
                     <div class="row">
                         <div class="container-fluid d-flex flex-row-reverse">
                             <i class="fa fa-user pt-1 text-muted"></i>
-                            <h6 class="mt-1 mx-2">{{ session('user')[0]->userName }}</h6>
+                            <h6 class="mt-1 mx-2">{{ session('vendor')[0]->name }}</h6>
 
-                            <i class="fa fa-briefcase text-muted" style="margin-right: 10px; padding-top: 5px"></i>
-                            <h6 class="mt-1 mx-2">{{ session('user')[0]->credits }}</h6>
+                            <a href="/user/topup" class="d-flex text-dark mx-2" style="text-decoration: none;">
+                                <i class="fa fa-briefcase text-muted" style="padding-top: 5px"></i>
+                                <h6 class="mt-1 mx-2">{{ session('vendor')[0]->credits }}</h6>
+                            </a>
 
                             <i class="fa fa-user-group text-muted" style="margin-right: 10px; padding-top: 5px"></i>
                             <h6 class="mt-1 mx-2">14</h6>
 
-                            <h6 class="mt-1 mx-2">{{ session('user')[0]->name }}</h6>
+                            <h6 class="mt-1 mx-2">{{ session('vendor')[0]->email }}</h6>
                         </div>
                     </div>
                     <!-- Main -->
