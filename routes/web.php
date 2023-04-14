@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('dashboard');
+    return view('user.login', ['error'=> false]);
 });
 
 Route::get('/vendor/register', function () {
