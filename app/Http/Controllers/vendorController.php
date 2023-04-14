@@ -7,6 +7,11 @@ use App\Models\message;
 
 class vendorController extends Controller
 {
+    function refreshVendor(){
+        $vendor = DB::select("select * from vendor where vendorId = ?", [session('vendor')[0]->vendorId]);
+        session(['vendor'=> $vendor]);
+    }
+
     function verifyUser(Request $request){
         $email = $request->email;
         $password = $request->password;
@@ -87,8 +92,30 @@ class vendorController extends Controller
             'created_at' => now(),  
             'updated_at' => now(),
         ]);
-
         // redirect to the thank-you page
         return redirect('/vendor/login');
+    }
+
+
+    function getTransactions(){
+        $this->refreshVendor();
+        $transactions = DB::select("select * from transaction where vendorId = ?", [session('vendor')[0]->vendorId]);
+        return view("/vendor/transactions", ['transactions' => $transactions]);
+    }
+
+    function getUsers(){
+        $this->refreshVendor();
+        $users = DB::select("select * from user where vendorId = ?", [session('vendor')[0]->vendorId]);
+        return view("/vendor/users", ['users' => $users]);
+    }
+
+    function saveUser(Request $request){
+        $this->refreshVendor();
+        $email = $request->email;
+        $contact = $request->contact;
+        $username = $request->username;
+
+        DB::insert("insert into user values(DEFAULT, ?, ?, ?, ?, ?, ?, ?, ?)", [session('vendor')[0]->vendorId, $username, $contact, $email, 'sure', 'active', now(), now()]);
+        return redirect('/vendor/users');
     }
 }

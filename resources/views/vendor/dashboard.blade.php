@@ -41,22 +41,19 @@
                             <i class="fa fa-home mx-3" style="width:15px"></i> 
                             <span>Phonebook</span>
                         </a> -->
-                        <!-- <a class="menu-item d-flex align-items-center text-white" id="singlesms" href="/user/singlesms">
-                            <i class="fa fa-sms mx-3" style="width:15px"></i> 
-                            <span>Single sms</span>
-                        </a> -->
-                        <!-- <a class="menu-item d-flex align-items-center text-white" id="bulksms" href="/user/bulksms">
-                            <i class="fa fa-comments mx-3" style="width:15px"></i> 
-                            <span>Bulk sms</span>
-                        </a> -->
-                        <!-- <a class="menu-item d-flex align-items-center text-white" id="customsms" href="/user/customsms">
-                            <i class="fa fa-chess-queen mx-3" style="width:15px"></i> 
-                            <span>Custom sms</span>
-                        </a> -->
-                        <!-- <a class="menu-item d-flex align-items-center text-white" id="outbox" href="/user/outbox">
-                            <i class="fas fa-inbox mx-3" style="width:15px"></i> 
-                            <span>Outbox</span>
-                        </a> -->
+                        <a class="menu-item d-flex align-items-center text-white" id="transactions" href="/vendor/transactions">
+                            <i class="fa fa-exchange mx-3" style="width:15px"></i> 
+                            <span>Transactions</span>
+                        </a>
+                        <a class="menu-item d-flex align-items-center text-white" id="users" href="/vendor/users">
+                            <i class="fa fa-users mx-3" style="width:15px"></i> 
+                            <span>Users</span>
+                        </a>
+                        <a class="menu-item d-flex align-items-center text-white" id="users" href="/vendor/adduser">
+                            <i class="fa fa-plus mx-3" style="width:15px"></i> 
+                            <span>New user</span>
+                        </a>
+                        
 
                         <a class="menu-item d-flex align-items-center text-white mt-5" id="outbox" href="/vendor/signout" style="background-color: orangered;">
                             <i class="fa fa-arrow-left mx-3" style="width:15px"></i> 

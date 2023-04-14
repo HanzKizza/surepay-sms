@@ -52,6 +52,10 @@ Route::get('/vendor/home', function () {return view('vendor.home');});
 Route::get('/vendor/register', function () {return view('vendor.register');});
 Route::get('/vendor/login', function () {return view('vendor.login', ['error'=> false]);});
 Route::get('/vendor/signout', 'vendorController@vendorSignout');
+Route::get('/vendor/transactions', 'vendorController@getTransactions');
+Route::get('/vendor/users', 'vendorController@getUsers');
+Route::get('/vendor/adduser', function () {return view('vendor.adduser');});
+Route::post('/vendor/saveuser', 'vendorController@saveUser');
 
 
 

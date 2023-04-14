@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Apr 14, 2023 at 08:08 AM
+-- Generation Time: Apr 14, 2023 at 10:22 AM
 -- Server version: 5.7.31
 -- PHP Version: 7.3.21
 
@@ -181,6 +181,7 @@ CREATE TABLE IF NOT EXISTS `transaction` (
   `userId` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `transRef` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `transType` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `amount` bigint(20) NOT NULL,
   `creditsBefore` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `creditsAfter` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `details` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
@@ -188,15 +189,18 @@ CREATE TABLE IF NOT EXISTS `transaction` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`transaction_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `transaction`
 --
 
-INSERT INTO `transaction` (`transaction_id`, `vendorId`, `userId`, `transRef`, `transType`, `creditsBefore`, `creditsAfter`, `details`, `status`, `created_at`, `updated_at`) VALUES
-(1, 1, '0', '23456', 'creditTopout', '25', '275', 'this is a test', 'success', '2023-04-13 11:47:33', '2023-04-13 11:47:33'),
-(2, 1, '0', '23456', 'creditTopout', '25', '275', 'This is a test', 'success', '2023-04-13 11:51:42', '2023-04-13 11:51:42');
+INSERT INTO `transaction` (`transaction_id`, `vendorId`, `userId`, `transRef`, `transType`, `amount`, `creditsBefore`, `creditsAfter`, `details`, `status`, `created_at`, `updated_at`) VALUES
+(1, 1, '0', '23456', 'creditTopout', 0, '25', '275', 'this is a test', 'success', '2023-04-13 11:47:33', '2023-04-13 11:47:33'),
+(2, 1, '0', '23456', 'creditTopout', 10000, '25', '275', 'This is a test', 'success', '2023-04-13 11:51:42', '2023-04-13 11:51:42'),
+(3, 1, '0', '34546', 'creditTopout', 4000, '275', '375', 'Credit topup test', 'success', '2023-04-14 07:01:06', '2023-04-14 07:01:06'),
+(4, 1, '0', '3454654', 'creditTopout', 2000, '375', '425', 'TEst', 'success', '2023-04-14 07:20:50', '2023-04-14 07:20:50'),
+(5, 3, '0', '3454654', 'creditTopout', 4000, '0', '100', 'test', 'success', '2023-04-14 07:21:39', '2023-04-14 07:21:39');
 
 -- --------------------------------------------------------
 
@@ -243,14 +247,16 @@ CREATE TABLE IF NOT EXISTS `vendor` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`vendorId`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `vendor`
 --
 
 INSERT INTO `vendor` (`vendorId`, `name`, `contact`, `email`, `credits`, `pwd`, `status`, `created_at`, `updated_at`) VALUES
-(1, 'Sure Test', '256777205339', 'hanningtonkizza@gmail.com', '275', 'hanz', 'active', NULL, '2023-04-13 11:51:42');
+(1, 'Sure Test', '256777205339', 'hanningtonkizza@gmail.com', '425', 'hanz', 'active', NULL, '2023-04-14 07:20:50'),
+(2, 'Test Vendor', '256777205', 'hanningtonkizza67@gmail.com', '0', '$2y$10$Qq/e5WJMQaSP2nVUNmc.Ruzh6grhaPm7gPJz/Kn68hKQNOSx6UnRy', 'active', '2023-04-14 05:46:25', '2023-04-14 05:46:25'),
+(3, 'Test Vendor', '256777205', 'hanningtonkizza87@gmail.com', '100', 'hanz', 'active', '2023-04-14 05:49:52', '2023-04-14 07:21:39');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

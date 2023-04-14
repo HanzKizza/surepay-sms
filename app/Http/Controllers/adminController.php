@@ -43,7 +43,7 @@ class adminController extends Controller
         $creditsAfter = ceil(intval($amount) / 40);
         $creditsAfter += intval($creditsBefore);
         $creditsAfter = strval($creditsAfter);
-        $admin = DB::insert("insert into transaction values(DEFAULT, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [$vendorId, '0', $transRef, $transType, $creditsBefore, $creditsAfter, $details, 'success', now(), now()]);
+        $admin = DB::insert("insert into transaction values(DEFAULT, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [$vendorId, '0', $transRef, $transType, $amount, $creditsBefore, $creditsAfter, $details, 'success', now(), now()]);
         DB::update("update vendor set credits = ?, updated_at = ? where vendorId = ?", [$creditsAfter, now(), $vendorId]);
         return "Suceess";
     }
