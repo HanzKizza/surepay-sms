@@ -17,8 +17,10 @@ class CallFunctionMiddlewareForVendors
      */
     public function handle(Request $request, Closure $next)
     {
-        $vendor = DB::select("select * from vendor where vendorId = ?", [session('vendor')[0]->vendorId]);
-        session(['vendor'=> $vendor]);
+        if(session('vendor')){
+            $vendor = DB::select("select * from vendor where vendorId = ?", [session('vendor')[0]->vendorId]);
+            session(['vendor'=> $vendor]);
+        }
         return $next($request);
     }
 }
