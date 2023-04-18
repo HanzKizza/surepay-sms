@@ -21,7 +21,7 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
+        <link rel="shortcut icon" href="{{ asset('assets/images/surepay_logo.jpeg') }}" type="image/x-icon">
         <script src="{{ asset('assets/js/dashboard.js') }}"></script>
         <link rel="stylesheet" href="{{ asset('assets/css/dashboard.css') }}">
         
@@ -32,8 +32,8 @@
                 <!-- Dashboard Nav Bar -->
                 <div class="col-md-2 vh-100 px-0" id="dashboard_nav">
                     <!-- logo -->
-                    <div class="container-fluid logo p-2 bg-dark bg-opacity-25">
-                        <img src="{{ asset('assets/images/surepay_logo.png') }}" class="img-fluid"/>
+                    <div class="container-fluid logo p-0 bg-dark bg-opacity-25">
+                        <img src="{{ asset('assets/images/surepay_logo.jpeg') }}" class="img-fluid"/>
                     </div>
 
                     <div class="menu-items container-fluid my-4 p-0 pt-5">
@@ -53,12 +53,6 @@
                             <i class="fa fa-plus mx-3" style="width:15px"></i> 
                             <span>New user</span>
                         </a>
-                        
-
-                        <a class="menu-item d-flex align-items-center text-white mt-5" id="outbox" href="/vendor/signout" style="background-color: orangered;">
-                            <i class="fa fa-arrow-left mx-3" style="width:15px"></i> 
-                            <span>Logout</span>
-                        </a>
                     </div>
                 </div>
 
@@ -67,6 +61,9 @@
                     <!-- customer info -->
                     <div class="row">
                         <div class="container-fluid d-flex flex-row-reverse">
+                            <a href="/vendor/signout" style="margin-left: 10px;" data-toggle="tooltip" data-placement="top" title="Sign out">
+                                <i class="fas fa-power-off text-danger" style="margin-right: 10px; padding-top: 5px"></i>
+                            </a>
                             <i class="fa fa-user pt-1 text-muted"></i>
                             <h6 class="mt-1 mx-2">{{ session('vendor')[0]->name }}</h6>
 
