@@ -1,5 +1,7 @@
 @extends('vendor.dashboard')
 @section('title', 'SurePay Vendor')
+<script src="{{ asset('assets/js/plotly.js') }}"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 
 
 @section('content')
@@ -7,19 +9,26 @@
                 <div class="row d-flex flex-row mx-1" style="gap:20px">
                         <div class="my-card mx-3" style="flex:1; height:150px">
                                 <h5 class="text-dark mt-3 text-decoration-underline">System Users</h5>
-                                <h1 class=" text-primary mt-2">6</h1>
+                                <h1 class=" text-primary mt-2 d-flex align-items-center"><i class="fa fa-users text-dark" style="margin-right: 10px; font-size:18px"></i>6</h1>
                                 <h6 class="text-muted mt-3">All active</h6>
                         </div>
                         <div class="my-card" style="flex:1; height:150px">
                                 <h5 class="text-dark mt-3 text-decoration-underline">Message Count</h5>
-                                <h1 class=" text-success mt-2">100045</h1>
-                                <h6 class="text-muted mt-3">Lost 7 days</h6>
+                                <h1 class=" text-success mt-2 d-flex align-items-center"><i class="fa fa-comments text-dark" style="margin-right: 10px; font-size:18px"></i>100045</h1>
+                                <h6 class="text-muted mt-3">Last 7 days</h6>
                         </div>
-                        <div class="my-card" style="flex:1; height:150px"></div>
-                        <div class="my-card" style="flex:1; height:150px"></div>
+                        <div class="my-card" style="flex:1; height:150px">
+                                <h5 class="text-dark mt-3 text-decoration-underline">Transactions</h5>
+                                <h1 class=" text-warning mt-2 d-flex align-items-center"><i class="fa fa-money-bill-transfer text-dark" style="margin-right: 10px; font-size:18px"></i>45</h1>
+                                <h6 class="text-muted mt-3">Last 30 days</h6></div>
+                        <div class="my-card" style="flex:1; height:150px">
+                                <h5 class="text-dark mt-3 text-decoration-underline">Credits</h5>
+                                <h1 class=" text-danger mt-2 d-flex align-items-center"><i class="fa fa-briefcase text-dark" style="margin-right: 10px; font-size:18px"></i>{{ session('vendor')[0]->credits }}</h1>
+                                <h6 class="text-muted mt-3">SMS Credits</h6>
+                        </div>
                 </div>
                 <div class="row mx-2 my-4">
-                        <h3>Sms for last last</h3>
+                        <div class="container" id="myPlot"></div>
                 </div>
         </div>
 @endsection
@@ -30,3 +39,31 @@
         box-shadow: 1px 1px 2px 2px grey;
     }
 </style>
+
+<script>
+        $(document).ready(function(){
+                var xArray = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,20];
+                var yArray = [7,8,8,9,9,9,10,11,14,14,15,23,32,12,32,3,0, 9, 19,45,21,22,23,15,13,31,32,21,16,21];
+
+                // Define Data
+                var data = [{
+                x: xArray,
+                y: yArray,
+                mode:"markers",
+                type:"scatter"
+                }];
+
+                min = Math.min(yArray)
+                max = Math.max(yArray)
+
+                // Define Layout
+                var layout = {
+                xaxis: {range: [0, 30], title: "Days"},
+                yaxis: {range: [0, max], title: "SMS"},  
+                title: "Sms Last 30 days"
+                };
+
+                // Display using Plotly
+                Plotly.newPlot("myPlot", data, layout);
+        })
+</script>
