@@ -1,7 +1,6 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 @extends('vendor.dashboard')
 @section('title', 'Users')
-
-
 @section('content')
     <div class="container-fluid">
         <div class="row">
@@ -22,7 +21,7 @@
                 <tbody>
                     
                     @foreach ($users as $user)
-                        <tr>
+                        <tr style="cursor:pointer" id="{{ $user->userId }}" onclick="managerUser(this)">
                             <td>{{ $user->userId }}</td>
                             <td>{{ $user->userName }}</td>
                             <td>{{ $user->contact }}</td>
@@ -36,3 +35,11 @@
         </div>
     </div>
 @endsection
+
+
+<script>
+    function managerUser(el){
+        userId = $(el).attr("id")
+        alert(userId)
+    }
+</script>
