@@ -59,8 +59,8 @@ Route::middleware(['call-function-for-vendors'])->group(function () {
     Route::get('/vendor/adduser', function () {return view('vendor.adduser');});
     Route::get('/vendor/transactions', 'vendorController@getTransactions');
     Route::get('/vendor/users', 'vendorController@getUsers');
+    Route::post('/vendor/manageUser', 'vendorController@manageUser');
 });
-
 
 
 Route::post('/populate', 'dashboardController@populate')->name('populate');

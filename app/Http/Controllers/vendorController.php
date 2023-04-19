@@ -118,4 +118,8 @@ class vendorController extends Controller
         DB::insert("insert into user values(DEFAULT, ?, ?, ?, ?, ?, ?, ?, ?)", [session('vendor')[0]->vendorId, $username, $contact, $email, 'sure', 'active', now(), now()]);
         return redirect('/vendor/users');
     }
+
+    function manageUser(Request $request){
+        return view("/vendor/manageUser");
+    }
 }

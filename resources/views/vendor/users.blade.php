@@ -40,6 +40,22 @@
 <script>
     function managerUser(el){
         userId = $(el).attr("id")
-        alert(userId)
+        token = "{{ csrf_token() }}"
+        var formdata = new FormData;
+        formdata.append("userId", userId)
+        formdata.append('_token', "{{ csrf_token() }}")
+        $.ajax({
+            type: "POST",
+            url: "/vendor/manageUser",
+            data: formdata,
+            processData: false,
+            contentType: false,
+            success: function (response) {
+                alert(response)
+            },
+            error:function(response){
+                alert("Something went wrong, please try again later")
+            }
+        });
     }
 </script>
