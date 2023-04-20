@@ -120,6 +120,12 @@ class vendorController extends Controller
     }
 
     function manageUser(Request $request){
-        return view("/vendor/manageUser");
+        $userId = $request->userId;
+        $user = DB::select("select * from user where userId = ?", [$userId]);
+        $transactions = DB::select("select * from transaction where userId = ? & vendorId = ?", [$userId, session("vendor")[0]->vendorId]);
+        $messages = DB::select("select * from messages where clientId = ? limit 20", [$userId]);
+        return view("/vendor/manageUser", ["user"=>$user, "transactions"=>$transactions, "messages"=>$messages]);
+
+
     }
 }

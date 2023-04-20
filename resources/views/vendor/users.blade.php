@@ -33,6 +33,12 @@
                 </tbody>
             </table>
         </div>
+        <div id="manageUser">
+            <div class="container .d-flex flex-row-reverse">
+                <button class="btn text-danger close-btn" style="float:right" onclick="$('#manageUser').hide(100)"><i class="fa fa-times" style="font-size:20px"></i></button>
+            </div>
+            <div class="container content"></div>
+        </div>
     </div>
 @endsection
 
@@ -51,7 +57,9 @@
             processData: false,
             contentType: false,
             success: function (response) {
-                alert(response)
+                // alert(response)
+                $("#manageUser").show()
+                $("#manageUser .content").html(response)
             },
             error:function(response){
                 alert("Something went wrong, please try again later")
@@ -59,3 +67,22 @@
         });
     }
 </script>
+
+<style>
+    #manageUser{
+        position:fixed;
+        display: none;
+        background-color: white;
+        z-index:5;
+        top:9%;
+        width:70%;
+        height: 90%;
+        border-radius: 10px;
+        box-shadow: 1px 1px 2px 2px grey;
+        overflow-y: auto;
+    }
+    #managerUser .close-btn:hover{
+        background-color: red !important;
+        color: white !important;
+    }
+</style>
