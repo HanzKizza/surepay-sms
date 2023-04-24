@@ -86,6 +86,9 @@ class vendorController extends Controller
             'name' => $validatedData['name'],
             'contact' =>$validatedData['contact'],
             'email' => $validatedData['email'],
+            'rate' => 40,
+            'type' => "independent",
+            'referorId' => 0,
             'pwd' => $validatedData['password'],
             'status' => 'active', // set default status to active
             'credits' => 0, // set default credits to 0

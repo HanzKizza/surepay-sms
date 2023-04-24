@@ -19,6 +19,9 @@ class CreateVendorTable extends Migration
             $table->string("contact");
             $table->string("email");
             $table->string("credits");
+            $table->integer("rate");
+            $table->string("type");
+            $table->integer("referorId");
             $table->string("pwd");
             $table->string("status");
             $table->timestamps();

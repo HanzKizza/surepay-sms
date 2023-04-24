@@ -22,8 +22,8 @@
                                 <h1 class=" text-warning mt-2 d-flex align-items-center"><i class="fa fa-money-bill-transfer text-dark" style="margin-right: 10px; font-size:18px"></i>45</h1>
                                 <h6 class="text-muted mt-3">Last 30 days</h6></div>
                         <div class="my-card" style="flex:1; height:150px">
-                                <h5 class="text-dark mt-3 text-decoration-underline">Credits</h5>
-                                <h1 class=" text-danger mt-2 d-flex align-items-center"><i class="fa fa-briefcase text-dark" style="margin-right: 10px; font-size:18px"></i>{{ session('vendor')[0]->credits }}</h1>
+                                <h5 class="text-dark mt-3 text-decoration-underline">Rate</h5>
+                                <h1 class=" text-danger mt-2 d-flex align-items-center"><i class="fa fa-money-bill text-dark" style="margin-right: 10px; font-size:18px"></i>{{ session('vendor')[0]->rate }}</h1>
                                 <h6 class="text-muted mt-3">SMS Credits</h6>
                         </div>
                 </div>
