@@ -86,6 +86,9 @@ class vendorController extends Controller
             'name' => $validatedData['name'],
             'contact' =>$validatedData['contact'],
             'email' => $validatedData['email'],
+            'rate' => 40,
+            'type' => "independent",
+            'referorId' => 0,
             'pwd' => $validatedData['password'],
             'status' => 'active', // set default status to active
             'credits' => 0, // set default credits to 0
@@ -117,5 +120,15 @@ class vendorController extends Controller
 
         DB::insert("insert into user values(DEFAULT, ?, ?, ?, ?, ?, ?, ?, ?)", [session('vendor')[0]->vendorId, $username, $contact, $email, 'sure', 'active', now(), now()]);
         return redirect('/vendor/users');
+    }
+
+    function manageUser(Request $request){
+        $userId = $request->userId;
+        $user = DB::select("select * from user where userId = ?", [$userId]);
+        $transactions = DB::select("select * from transaction where userId = ? & vendorId = ?", [$userId, session("vendor")[0]->vendorId]);
+        $messages = DB::select("select * from messages where clientId = ? limit 20", [$userId]);
+        return view("/vendor/manageUser", ["user"=>$user, "transactions"=>$transactions, "messages"=>$messages]);
+
+
     }
 }

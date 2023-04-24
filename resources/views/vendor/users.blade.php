@@ -1,7 +1,6 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 @extends('vendor.dashboard')
 @section('title', 'Users')
-
-
 @section('content')
     <div class="container-fluid">
         <div class="row">
@@ -22,7 +21,7 @@
                 <tbody>
                     
                     @foreach ($users as $user)
-                        <tr>
+                        <tr style="cursor:pointer" id="{{ $user->userId }}" onclick="managerUser(this)">
                             <td>{{ $user->userId }}</td>
                             <td>{{ $user->userName }}</td>
                             <td>{{ $user->contact }}</td>
@@ -34,5 +33,56 @@
                 </tbody>
             </table>
         </div>
+        <div id="manageUser">
+            <div class="container .d-flex flex-row-reverse">
+                <button class="btn text-danger close-btn" style="float:right" onclick="$('#manageUser').hide(100)"><i class="fa fa-times" style="font-size:20px"></i></button>
+            </div>
+            <div class="container content"></div>
+        </div>
     </div>
 @endsection
+
+
+<script>
+    function managerUser(el){
+        userId = $(el).attr("id")
+        token = "{{ csrf_token() }}"
+        var formdata = new FormData;
+        formdata.append("userId", userId)
+        formdata.append('_token', "{{ csrf_token() }}")
+        $.ajax({
+            type: "POST",
+            url: "/vendor/manageUser",
+            data: formdata,
+            processData: false,
+            contentType: false,
+            success: function (response) {
+                // alert(response)
+                $("#manageUser").show()
+                $("#manageUser .content").html(response)
+            },
+            error:function(response){
+                alert("Something went wrong, please try again later")
+            }
+        });
+    }
+</script>
+
+<style>
+    #manageUser{
+        position:fixed;
+        display: none;
+        background-color: white;
+        z-index:5;
+        top:9%;
+        width:70%;
+        height: 90%;
+        border-radius: 10px;
+        box-shadow: 1px 1px 2px 2px grey;
+        overflow-y: auto;
+    }
+    #managerUser .close-btn:hover{
+        background-color: red !important;
+        color: white !important;
+    }
+</style>

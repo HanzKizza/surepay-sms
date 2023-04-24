@@ -13,7 +13,7 @@
                         <h1 class="text-center">{{ session('user')[0]->credits }}</h1>
                     </div>
                     <div class="row mt-5">
-                        <h5 class="text-white">Credit rate: @ugx 40</h5>
+                        <!-- <h5 class="text-white">Credit rate: @ugx 40</h5> -->
                     </div>
                 </div>
             </div>
