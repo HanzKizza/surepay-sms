@@ -119,7 +119,6 @@ class vendorController extends Controller
         $userId = $request->userId;
         $telecom = $request->telecom;
         $amount = $request->amount;
-        $creditsBefore = $request->creditsBefore;
         $phoneNumber = $request->phoneNumber;
         // make call to mommo api
         return json_encode(array(true, 'transaction initiated'));
