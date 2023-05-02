@@ -36,11 +36,11 @@
                         <img src="{{ asset('assets/images/surepay_logo.jpeg') }}" class="img-fluid"/>
                     </div>
 
-                    <div class="menu-items container-fluid my-4 p-0 pt-5">
-                        <!-- <a class="menu-item d-flex align-items-center text-white" id="phonebook">
+                    <div class="menu-items container-fluid my-1 p-0 pt-2">
+                        <a class="menu-item d-flex align-items-center text-white" id="home" href="/vendor/home">
                             <i class="fa fa-home mx-3" style="width:15px"></i> 
-                            <span>Phonebook</span>
-                        </a> -->
+                            <span>Home</span>
+                        </a>
                         <a class="menu-item d-flex align-items-center text-white" id="transactions" href="/vendor/transactions">
                             <i class="fa fa-exchange mx-3" style="width:15px"></i> 
                             <span>Transactions</span>

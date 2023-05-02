@@ -31,12 +31,67 @@ class vendorController extends Controller
         $password = $request->password;
         $vendor = DB::select("select * from vendor where email = ? and pwd = ?", [$email, $password]);
         // var_dump($user);
-        if($vendor){
+        if(!empty($vendor)){
+            $vendorId = $vendor[0]->vendorId;
+            $users = DB::select("select count(userId) as users from user where vendorId = ?", [$vendorId]);
+            $transactions = DB::select("select count(transaction_id) as transactions from transaction where vendorId = ? and created_at >= DATE_SUB(NOW(), INTERVAL 30 DAY);", [$vendorId]);
+            $messages = DB::select("select count(messageId) as messages from messages where clientId = ? and created_at >= DATE_SUB(NOW(), INTERVAL 30 DAY);", [$vendorId]);
             session(['vendor'=> $vendor]);
+            session(['users'=> $users]);
+            session(['transactions'=> $transactions]);
+            session(['messages'=> $messages]);
             return redirect("/vendor/home");
         }else{
             return view("/vendor/login", ['error' => true]);
         }
+    }
+
+
+    public function messageCountByDay()
+    {
+        $query = "
+            SELECT
+            date_list.date,
+            COALESCE(message_count.message_count, 0) AS message_count
+            FROM
+            (
+                SELECT CURDATE() - INTERVAL (a.a + (10 * b.a) + (100 * c.a)) DAY AS date
+                FROM
+                (SELECT 0 AS a UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3
+                UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7
+                UNION ALL SELECT 8 UNION ALL SELECT 9) AS a
+                CROSS JOIN (SELECT 0 AS a UNION ALL SELECT 1 UNION ALL SELECT 2
+                            UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5
+                            UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8
+                            UNION ALL SELECT 9) AS b
+                CROSS JOIN (SELECT 0 AS a UNION ALL SELECT 1 UNION ALL SELECT 2
+                            UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5
+                            UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8
+                            UNION ALL SELECT 9) AS c
+                WHERE (a.a + (10 * b.a) + (100 * c.a)) < 30
+            ) AS date_list
+            LEFT JOIN (
+                SELECT DATE(created_at) AS message_date, COUNT(*) AS message_count
+                FROM messages
+                WHERE created_at >= DATE(NOW()) - INTERVAL 30 DAY
+                GROUP BY message_date
+            ) AS message_count ON date_list.date = message_count.message_date
+            ORDER BY date_list.date ASC
+        ";
+
+        $results = DB::select($query);
+
+        $messageCounts = [];
+        foreach ($results as $result) {
+            $messageCounts[] = $result->message_count;
+        }
+
+        // Fill in any missing days with 0 message counts
+        while (count($messageCounts) < 30) {
+            array_unshift($messageCounts, 0);
+        }
+
+        return json_encode($messageCounts);
     }
 
 
