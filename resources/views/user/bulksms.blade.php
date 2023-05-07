@@ -30,10 +30,10 @@
 
             <div class="col-md-6">
                 <div class="card w-100">
-                    <div class="card-header bg-danger text-white d-flex align-items-center">
+                    <div class="card-header bg-success text-white d-flex align-items-center">
                         <h5 style="margin-right: 30px;">Receipients</h5>
                         <input type="tel" id="receipient" name="phoneNumber" class="form-control w-50 mx-2 bg-white text-success py-1" placeholder="Phone Number" />
-                        <button type="submit" onclick="addToRecipient()" class="btn btn-success py-0 px-2"><i class="fa fa-plus"></i></button>
+                        <button type="submit" onclick="addToRecipient()" class="btn btn-primary py-2 rounded-circle text-center px-2"><i class="fa fa-plus"></i></button>
                         <div class="totalReceipients bg-dark text-center rounded-2 px-2" style="position:absolute; height: 20p; min-width:20px; right: 2%">4</div>
                     </div>
                     <div class="row">
@@ -50,7 +50,7 @@
         </div>
     </div>
 @endsection
-       
+
 <script>
     var contacts = new Array()
 
@@ -65,7 +65,7 @@
         if(value != ""){
             contacts.push(value)
             $(".totalReceipients").text(contacts.length)
-            $("#receipientList").prepend("<label class='p-1 mx-2 mt-1 px-3 bg-info text-white rounded-3 text-center'>"+value+"</label>")
+            $("#receipientList").prepend("<label class='p-1 mx-2 mt-1 px-1 bg-info text-white rounded-3 text-center'>"+value+"</label>")
         }
     }
 
