@@ -24,7 +24,7 @@
         <link rel="shortcut icon" href="{{ asset('assets/images/surepay_logo.jpeg') }}" type="image/x-icon">
         <script src="{{ asset('assets/js/dashboard.js') }}"></script>
         <link rel="stylesheet" href="{{ asset('assets/css/dashboard.css') }}">
-        
+
     </head>
     <body>
         <div class="container-fluid">
@@ -38,20 +38,24 @@
 
                     <div class="menu-items container-fluid my-1 p-0 pt-2">
                         <a class="menu-item d-flex align-items-center text-white" id="home" href="/vendor/home">
-                            <i class="fa fa-home mx-3" style="width:15px"></i> 
+                            <i class="fa fa-home mx-3" style="width:15px"></i>
                             <span>Home</span>
                         </a>
                         <a class="menu-item d-flex align-items-center text-white" id="transactions" href="/vendor/transactions">
-                            <i class="fa fa-exchange mx-3" style="width:15px"></i> 
+                            <i class="fa fa-exchange mx-3" style="width:15px"></i>
                             <span>Transactions</span>
                         </a>
                         <a class="menu-item d-flex align-items-center text-white" id="users" href="/vendor/users">
-                            <i class="fa fa-users mx-3" style="width:15px"></i> 
+                            <i class="fa fa-users mx-3" style="width:15px"></i>
                             <span>Users</span>
                         </a>
                         <a class="menu-item d-flex align-items-center text-white" id="users" href="/vendor/adduser">
-                            <i class="fa fa-plus mx-3" style="width:15px"></i> 
+                            <i class="fa fa-plus mx-3" style="width:15px"></i>
                             <span>New user</span>
+                        </a>
+                        <a class="menu-item d-flex align-items-center text-white" id="affiliates" href="/vendor/affiliates">
+                            <i class="fas fa-inbox mx-3" style="width:15px"></i>
+                            <span>Affiliates</span>
                         </a>
                     </div>
                 </div>

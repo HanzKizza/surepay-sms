@@ -99,7 +99,7 @@ class vendorController extends Controller
     function loadOutBox(){
         $clientId = session('user')[0]->userId;
         $messages = DB::select("SELECT * FROM messages WHERE clientId = $clientId ORDER BY created_at DESC");
-        return view("user.outbox", ['messages' => $messages, 'clientId' => $clientId]); 
+        return view("user.outbox", ['messages' => $messages, 'clientId' => $clientId]);
     }
 
 
@@ -133,7 +133,7 @@ class vendorController extends Controller
         'password' => 'required|confirmed',
         'contact' => 'required'
         ]);
-        
+
 
         // insert the form data into the database using the DB facade
         DB::table('vendor')->insert([
@@ -146,12 +146,13 @@ class vendorController extends Controller
             'pwd' => $validatedData['password'],
             'status' => 'active', // set default status to active
             'credits' => 0, // set default credits to 0
-            'created_at' => now(),  
+            'created_at' => now(),
             'updated_at' => now(),
         ]);
         // redirect to the thank-you page
         return redirect('/vendor/login');
     }
+
 
 
     function getTransactions(){
@@ -160,11 +161,13 @@ class vendorController extends Controller
         return view("/vendor/transactions", ['transactions' => $transactions]);
     }
 
+
     function getUsers(){
         $this->refreshVendor();
         $users = DB::select("select * from user where vendorId = ?", [session('vendor')[0]->vendorId]);
         return view("/vendor/users", ['users' => $users]);
     }
+
 
     function saveUser(Request $request){
         $this->refreshVendor();
@@ -176,6 +179,7 @@ class vendorController extends Controller
         return redirect('/vendor/users');
     }
 
+
     function manageUser(Request $request){
         $userId = $request->userId;
         $user = DB::select("select * from user where userId = ?", [$userId]);
@@ -184,5 +188,35 @@ class vendorController extends Controller
         return view("/vendor/manageUser", ["user"=>$user, "transactions"=>$transactions, "messages"=>$messages]);
 
 
+    }
+
+
+    function getAffiliates(){
+        $vendorId = session('vendor')[0]->vendorId;
+        $affiliates = DB::select("select * from vendor where referorId = ?", [$vendorId]);
+        return view("vendor.affiliates", ["affiliates" => $affiliates]);
+    }
+
+    function creditAffiliate(Request $request){
+        $affiliateId = $request->vendorId;
+        $credits = intval($request->credits);
+        $vendor = DB::select('select * from vendor where vendorId = ?', [session("vendor")[0]->vendorId]);
+        $affiliate = DB::select('select * from vendor where vendorId = ?', [$affiliateId]);
+        $affiliateCredits =intval($affiliate[0]->credits);
+        $vendorCredits = intval($vendor[0]->credits);
+        if($vendorCredits >= $credits){
+            $vendorCreditsAfter = $vendorCredits - $credits;
+            $affiliateCreditsAfter = $affiliateCredits + $credits;
+            DB::update("update vendor set credits = ?, updated_at = ? where vendorId = ?", [$vendorCreditsAfter, now(), session("vendor")[0]->vendorId]);
+            DB::update("update vendor set credits = ?, updated_at = ? where vendorId = ?", [$affiliateCreditsAfter, now(), $affiliateId]);
+            $affiliateMessage = "Credit top up of {$credits} sms credits";
+            $vendorMessage = "Credit tranfer of {$credits} sms credits to {$affiliate[0]->name}";
+            DB::insert("insert into transaction values(DEFAULT, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [session("vendor")[0]->vendorId, '0', "212121", "Credit Transfer", 0, $vendorCredits, $vendorCreditsAfter, $vendorMessage, 'success', now(), now()]);
+            DB::insert("insert into transaction values(DEFAULT, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [$affiliateId, '0', "21".time(), "Affiliate Credit Topup", 0, $affiliateCredits, $affiliateCreditsAfter, $affiliateMessage, 'success', now(), now()]);
+            echo "Transaction complete";
+        }
+        else{
+            echo "You don't have enough credits";
+        }
     }
 }
