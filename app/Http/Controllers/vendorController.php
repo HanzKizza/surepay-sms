@@ -157,7 +157,7 @@ class vendorController extends Controller
 
     function getTransactions(){
         $this->refreshVendor();
-        $transactions = DB::select("select * from transaction where vendorId = ?", [session('vendor')[0]->vendorId]);
+        $transactions = DB::select("select * from transaction where vendorId = ? order by transaction_id desc", [session('vendor')[0]->vendorId]);
         return view("/vendor/transactions", ['transactions' => $transactions]);
     }
 
@@ -191,11 +191,42 @@ class vendorController extends Controller
     }
 
 
+
+    function createAffiliate(Request $request){
+        $name = $request->name;
+        $email = $request->email;
+        $contact = $request->contact;
+        $rate = 0;
+        $credits = 0;
+        $type = "affiliate";
+        $referrorId = session("vendor")[0]->vendorId;
+        $pwd = $this->getRandomPassword();
+        $status = "active";
+        DB::insert("insert into vendor values(DEFAULT, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [$name, $contact, $email, $rate, $credits, $type, $referrorId, $pwd, $status, now(), now()]);
+        return $this->getAffiliates();
+    }
+
+
+    function getRandomPassword(){
+        $chars = '0123456789abcdefghijklmnopqrstuvwxyz';
+
+        // Generate a six-character random string
+        $string = '';
+        for ($i = 0; $i < 6; $i++) {
+            $string .= $chars[rand(0, strlen($chars) - 1)];
+        }
+        return $string;
+    }
+
+
+
     function getAffiliates(){
         $vendorId = session('vendor')[0]->vendorId;
         $affiliates = DB::select("select * from vendor where referorId = ?", [$vendorId]);
         return view("vendor.affiliates", ["affiliates" => $affiliates]);
     }
+
+
 
     function creditAffiliate(Request $request){
         $affiliateId = $request->vendorId;

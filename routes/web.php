@@ -63,7 +63,9 @@ Route::middleware(['call-function-for-vendors'])->group(function () {
     Route::post('/vendor/manageUser', 'vendorController@manageUser');
     Route::post('/vendor/messageCountByDay', 'vendorController@messageCountByDay');
     Route::get('/vendor/affiliates', 'vendorController@getAffiliates');
+    Route::get('/vendor/registerAffiliate', function () {return view('vendor.registerAffiliate');});
     Route::post('/vendor/creditAffiliate', 'vendorController@creditAffiliate');
+    Route::post('/vendor/createAffiliate', 'vendorController@createAffiliate')->name('createAffiliate');
 });
 
 

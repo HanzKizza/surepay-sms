@@ -57,6 +57,10 @@
                             <i class="fas fa-inbox mx-3" style="width:15px"></i>
                             <span>Affiliates</span>
                         </a>
+                        <a class="menu-item d-flex align-items-center text-white" id="affiliates" href="/vendor/registerAffiliate">
+                            <i class="fas fa-plus mx-3" style="width:15px"></i>
+                            <span>Register Affiliate</span>
+                        </a>
                     </div>
                 </div>
 

@@ -30,7 +30,7 @@
                             <td>{{ $affiliate->created_at }}</td>
                             <td>{{ $affiliate->updated_at }}</td>
                             <td class="d-flex justify-content-center">
-                                <button class="btn btn-outline-success px-1" onclick="creditAffiliate({{ $affiliate->vendorId }})">
+                                <button class="btn text-success px-1" onclick="creditAffiliate({{ $affiliate->vendorId }})" data-toggle="tooltip" title="credit vendor">
                                     <i class="fa fa-money-bill"></i>
                                 </button>
                             </td>
