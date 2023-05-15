@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -39,12 +40,32 @@ class adminController extends Controller
         $transType = $request->transType;
         $creditsBefore = $request->creditsBefore;
         $details = $request->details;
+        $rate = $request->rate;
         $amount = $request->amount;
-        $creditsAfter = ceil(intval($amount) / 40);
-        $creditsAfter += intval($creditsBefore);
-        $creditsAfter = strval($creditsAfter);
-        $admin = DB::insert("insert into transaction values(DEFAULT, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [$vendorId, '0', $transRef, $transType, $amount, $creditsBefore, $creditsAfter, $details, 'success', now(), now()]);
-        DB::update("update vendor set credits = ?, updated_at = ? where vendorId = ?", [$creditsAfter, now(), $vendorId]);
-        return "Suceess";
+        $creditsAfter = $creditsBefore;
+        try{
+            $creditsAfter = ceil(intval($amount) / intval($rate));
+            $creditsAfter += intval($creditsBefore);
+            $creditsAfter = strval($creditsAfter);
+            $admin = DB::insert("insert into transaction values(DEFAULT, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [$vendorId, '0', $transRef, $transType, $amount, $creditsBefore, $creditsAfter, $details, 'success', now(), now()]);
+            DB::update("update vendor set credits = ?, updated_at = ? where vendorId = ?", [$creditsAfter, now(), $vendorId]);
+            return "Suceess";
+        }
+        catch(Exception $e){
+            return "There was an error updating, ".$e->getMessage();
+        }
+    }
+
+    function vendorEdit(Request $request){
+        $vendorId = $request->vendorId;
+        $vendorName = $request->vendorName;
+        $rate = $request->rate;
+        $email = $request->email;
+        try{
+            $affected = DB::table('vendor')->where('vendorId', $vendorId)->update(['rate' => $rate]);
+        }
+        catch(Exception $e){
+            return "There was an error updating, ".$e->getMessage();
+        }
     }
 }

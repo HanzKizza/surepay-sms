@@ -32,10 +32,10 @@
 
         <div class="col-md-8">
             <div class="card w-100">
-                <div class="card-header bg-danger text-white d-flex align-items-center flex-row-reverse">
-                <button class="btn btn-outline-warning p-1 py-0" onclick="sendMessages()">Send <span class="badge totalMessages">0</span></button>   
-                <input type="number" id="cliendId" value="1" class="d-none"/> 
-                <input type="text" id="sender" value="surepay" class="d-none"/> 
+                <div class="card-header bg-success text-white d-flex align-items-center flex-row-reverse">
+                <button class="btn btn-outline-warning p-1 py-0" onclick="sendMessages()">Send <span class="badge totalMessages">0</span></button>
+                <input type="number" id="cliendId" value="1" class="d-none"/>
+                <input type="text" id="sender" value="surepay" class="d-none"/>
                 <h5 style="margin-right: 5%;">Generated SMS</h5>
                 </div>
                 <div class="row">
@@ -75,7 +75,7 @@
             success: function (response) {
                 messages = JSON.parse(response)
                 $(".totalMessages").text(messages.length)
-                
+
                 for(i = 0; i < messages.length; i++){
                     myHtml = "<tr><td>"+messages[i][0]+"</td><td>"+messages[i][1]+"</td></tr>";
                     $("#generatedMessages tbody").append(myHtml)

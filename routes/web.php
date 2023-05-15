@@ -40,6 +40,7 @@ Route::get('/admin/login', function () { return view('/admin/login', ['error'=> 
 Route::post('/admin/verifyAdmin', 'adminController@verifyAdmin');
 Route::get('/admin/home', function () { return view('admin/home'); });
 Route::post('/admin/vendorCreditTopup', 'adminController@vendorCreditTopup');
+Route::post('/admin/vendorEdit', 'adminController@vendorEdit');
 // Route::get('/admin/outbox', 'adminController@loadOutBox');
 Route::get('/admin/vendors', 'adminController@getVendors');
 Route::get('/admin/bulksms', function (){ return view("/admin/bulksms"); });
@@ -60,6 +61,11 @@ Route::middleware(['call-function-for-vendors'])->group(function () {
     Route::get('/vendor/transactions', 'vendorController@getTransactions');
     Route::get('/vendor/users', 'vendorController@getUsers');
     Route::post('/vendor/manageUser', 'vendorController@manageUser');
+    Route::post('/vendor/messageCountByDay', 'vendorController@messageCountByDay');
+    Route::get('/vendor/affiliates', 'vendorController@getAffiliates');
+    Route::get('/vendor/registerAffiliate', function () {return view('vendor.registerAffiliate');});
+    Route::post('/vendor/creditAffiliate', 'vendorController@creditAffiliate');
+    Route::post('/vendor/createAffiliate', 'vendorController@createAffiliate')->name('createAffiliate');
 });
 
 
