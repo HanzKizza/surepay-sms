@@ -36,7 +36,7 @@
                         <img src="{{ asset('assets/images/surepay_logo.jpeg') }}" class="img-fluid"/>
                     </div>
 
-                    <div class="menu-items container-fluid my-4 p-0 pt-5">
+                    <div class="menu-items container-fluid my-1 p-0 pt-1">
                         <!-- <a class="menu-item d-flex align-items-center text-white" id="singlesms" href="/user/singlesms">
                             <i class="fa fa-sms mx-3" style="width:15px"></i> 
                             <span>Single sms</span>

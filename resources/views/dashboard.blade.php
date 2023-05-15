@@ -21,7 +21,7 @@
 
         <script src="{{ asset('assets/js/dashboard.js') }}"></script>
         <link rel="stylesheet" href="{{ asset('assets/css/dashboard.css') }}">
-        
+
     </head>
     <body>
         <div class="container-fluid">
@@ -35,23 +35,27 @@
 
                     <div class="menu-items container-fluid my-4 p-0 pt-5">
                         <div class="menu-item d-flex align-items-center text-white" id="phonebook" onclick="populate(this)">
-                            <i class="fa fa-home mx-3" style="width:15px"></i> 
+                            <i class="fa fa-home mx-3" style="width:15px"></i>
                             <span>Phonebook</span>
                         </div>
                         <div class="menu-item d-flex align-items-center text-white" id="singlesms" onclick="populate(this)">
-                            <i class="fa fa-sms mx-3" style="width:15px"></i> 
+                            <i class="fa fa-sms mx-3" style="width:15px"></i>
                             <span>Single sms</span>
                         </div>
                         <div class="menu-item d-flex align-items-center text-white" id="bulksms" onclick="populate(this)">
-                            <i class="fa fa-comments mx-3" style="width:15px"></i> 
+                            <i class="fa fa-comments mx-3" style="width:15px"></i>
                             <span>Bulk sms</span>
                         </div>
                         <div class="menu-item d-flex align-items-center text-white" id="customsms" onclick="populate(this)">
-                            <i class="fa fa-chess-queen mx-3" style="width:15px"></i> 
+                            <i class="fa fa-chess-queen mx-3" style="width:15px"></i>
                             <span>Custom sms</span>
                         </div>
                         <div class="menu-item d-flex align-items-center text-white" id="outbox" onclick="outbox(1)">
-                            <i class="fas fa-inbox mx-3" style="width:15px"></i> 
+                            <i class="fas fa-inbox mx-3" style="width:15px"></i>
+                            <span>Sent</span>
+                        </div>
+                        <div class="menu-item d-flex align-items-center text-white" id="outbox" onclick="outbox(1)">
+                            <i class="fas fa-inbox mx-3" style="width:15px"></i>
                             <span>Outbox</span>
                         </div>
                     </div>
