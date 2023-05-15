@@ -21,7 +21,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
         <script src="{{ asset('assets/js/dashboard.js') }}"></script>
         <link rel="stylesheet" href="{{ asset('assets/css/dashboard.css') }}">
-        
+
     </head>
     <body>
         <div class="container-fluid">
@@ -173,7 +173,7 @@
     }
 
 
-    
+
     function extractContacts(data) {
         for (let i = 0; i < data.length; i++) {
              var phoneNumber = data[i];
