@@ -78,9 +78,6 @@
                                 <h6 class="mt-1 mx-2">{{ session('user')[0]->credits }}</h6>
                             </a>
 
-                            <i class="fa fa-user-group text-muted" style="margin-right: 10px; padding-top: 5px"></i>
-                            <h6 class="mt-1 mx-2">14</h6>
-
                             <h6 class="mt-1 mx-2">{{ session('user')[0]->name }}</h6>
                         </div>
                     </div>
