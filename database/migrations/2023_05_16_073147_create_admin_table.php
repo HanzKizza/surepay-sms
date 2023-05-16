@@ -14,13 +14,14 @@ class CreateAdminTable extends Migration
     public function up()
     {
         Schema::create('admin', function (Blueprint $table) {
-            $table->id("admin_id");
-            $table->string("name");
-            $table->string("contact");
-            $table->string("email");
-            $table->string("pwd");
-            $table->string("status");
-            $table->timestamps();
+            $table->bigIncrements('admin_id');
+            $table->string('name');
+            $table->string('contact');
+            $table->string('email');
+            $table->string('pwd');
+            $table->string('status');
+            $table->timestamp('created_at')->nullable();
+            $table->timestamp('updated_at')->nullable();
         });
     }
 

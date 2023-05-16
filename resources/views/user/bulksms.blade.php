@@ -37,7 +37,7 @@
                         <div class="totalReceipients bg-dark text-center rounded-2 px-2" style="position:absolute; height: 20p; min-width:20px; right: 2%">4</div>
                     </div>
                     <div class="row">
-                        <div class="card-body" id="receipientList" style="display:grid; grid-template-columns: auto auto auto auto; max-height: 550px; overflow:auto"></div>
+                        <div class="card-body" id="receipientList" style="display:grid; grid-template-columns: auto auto auto; max-height: 550px; overflow:auto"></div>
                     </div>
                     <div class="card-footer py-0 px-0">
                         <form id="contactsUploadForm" method="post" enctype="multipart/form-data" class="d-flex" onsubmit="uploadContacts(event)">
@@ -53,6 +53,7 @@
 
 <script>
     var contacts = new Array()
+    var errorContacts = new Array()
 
     $(document).ready(function(){
         $(".totalReceipients").text(contacts.length)
@@ -78,6 +79,9 @@
             }else{
                 break
             }
+        }
+        if(errorContacts.length > 1){
+            alert("The contacts "+JSON.stringify(errorContacts)+" Do not match the acceptible phonenumber pattern")
         }
     }
 
@@ -127,6 +131,7 @@
 
 
     function uploadContacts2(el){
+        clearContacts()
         fileInput = el
         const file = fileInput.files[0]
 
@@ -149,10 +154,14 @@
 
 
     function extractContacts(data) {
+        var phoneNumberRegex = /^256\d{9}$/
         for (let i = 0; i < data.length; i++) {
              var phoneNumber = data[i];
-            if (phoneNumber) {
+            if (phoneNumber && phoneNumber.match(phoneNumberRegex)) {
                 contacts.push(phoneNumber);
+            }
+            else{
+                errorContacts.push(phoneNumber);
             }
         }
     }
@@ -160,6 +169,7 @@
 
     function clearContacts(){
         contacts = []
+        errorContacts = []
         $("#receipientList").html("")
         renderReceipient()
     }

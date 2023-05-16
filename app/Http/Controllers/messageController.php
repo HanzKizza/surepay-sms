@@ -38,8 +38,10 @@ class messageController extends Controller
             $message->messageId = 1;
             $message->phoneNumber = $receipient;
             $message->message = $messageText;
-            $message->clientId = $clientId;
-            $message->sender = $sender;
+            $message->vendorId = session("user")[0]->vendorId;
+            $message->userId = session("user")[0]->userId;
+            $message->sender = session("user")[0]->name;
+            $message->service = "SMS-Portal";
             array_push($messages, $message);
             // var_dump($message);
             // $message->save();
