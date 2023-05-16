@@ -1,4 +1,4 @@
-@extends('admin.dashboard')
+@extends('admin.maker.dashboard')
 @section('title', 'SurePay: Vendors')
 @section('content')
     <div class="container-fluid">
@@ -23,17 +23,15 @@
                         <td class="credits">{{ $vendor->credits }}</td>
                         <td class="status">{{ $vendor->status }}</td>
                         <td class="text-center d-flex justify-content-around ">
-                            <button class="btn text-success p-0" onclick="showCreditForm(this)" data-toggle="tooltip" data-placement="top" title="Topup credits"><i class="fa fa-arrow-up"></i></button>
-                            <button class="btn text-warning p-0" onclick="showEditForm(this)"data-toggle="tooltip" data-placement="top" title="edit"><i class="fa fa-edit"></i></button>
-                            <button class="btn text-danger p-0" data-toggle="tooltip" data-placement="top" title="deactivate"><i class="fa fa-trash"></i></button>
+                            <button class="btn btn-success text-white" onclick="showCreditForm(this)" data-toggle="tooltip" data-placement="top" title="Topup credits"><i class="fa fa-arrow-up"></i></button>
                         </td>
                     </tr>
                 @endforeach
             </tbody>
         </table>
-  
 
-        
+
+
         <div id="vendorCredit" class="container-fluid">
             <div class="d-flex flex-row-reverse"><button class="btn text-danger mt-1" onclick="$('#vendorCredit').hide()"><i class="fa fa-times"></i></button></div>
             <div class="container">
@@ -158,7 +156,7 @@
         overflow-y: auto;
         display: none;
     }
-    
+
     #vendorCredit label{
         text-align: center;
         width: 100%;
@@ -205,7 +203,7 @@
         $("#vendorCreditForm .server-response").html("<i class='fa fa-spinner text-info'> processing.. please wait</i>")
         $.ajax({
                 type: "POST",
-                url: "/admin/vendorCreditTopup",
+                url: "/admin/maker/initiateVendorTopUp",
                 data: formdata,
                 processData: false,
                 contentType: false,

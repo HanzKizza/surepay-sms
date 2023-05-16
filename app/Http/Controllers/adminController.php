@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -13,11 +14,19 @@ class adminController extends Controller
         $admin = DB::select("select * from  admin where email = ? and pwd = ?", [$email, $password]);
         if($admin){
             session(['admin'=> $admin]);
+            if(strcasecmp("maker", $admin[0]->role) == 0){
+                return redirect("/admin/maker/home");
+            }
+            else if(strcasecmp("checker", $admin[0]->role) == 0){
+                return redirect("/admin/checker/home");
+            }
             return redirect("/admin/home");
         }else{
             return view("/admin/login", ['error' => true]);
         }
     }
+
+
 
     function signout(){
         session()->forget('user');
@@ -27,10 +36,39 @@ class adminController extends Controller
 
 
     function getVendors(){
+        $admin = session("admin");
         $vendors = DB::select("SELECT * FROM  vendor where status = 'active' ");
-        return view("admin.vendors", ['vendors' => $vendors]); 
+        if(strcasecmp("maker", $admin[0]->role) == 0){
+            return view("admin.maker.vendors", ['vendors' => $vendors]);
+        }
+        else if(strcasecmp("checker", $admin[0]->role) == 0){
+            return view("admin.checker.vendors", ['vendors' => $vendors]);
+        }
+        return view("admin.vendors", ['vendors' => $vendors]);
     }
 
+    function initiateVendorTopUp(Request $request){
+        $vendorId = $request->vendorId;
+        $vendorName = $request->vendorName;
+        $transRef = $request->transRef;
+        $transType = $request->transType;
+        $creditsBefore = $request->creditsBefore;
+        $details = $request->details;
+        $rate = $request->rate;
+        $amount = $request->amount;
+        $creditsAfter = $creditsBefore;
+        try{
+            $creditsAfter = ceil(intval($amount) / intval($rate));
+            $creditsAfter += intval($creditsBefore);
+            $creditsAfter = strval($creditsAfter);
+            DB::insert("insert into transaction values(DEFAULT, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [$vendorId, '0', $transRef, $transType, $amount, '', '', $details, 'pending', now(), now()]);
+            //DB::update("update vendor set credits = ?, updated_at = ? where vendorId = ?", [$creditsAfter, now(), $vendorId]);
+            return "Suceess";
+        }
+        catch(Exception $e){
+            return "There was an error updating, ".$e->getMessage();
+        }
+    }
 
     function vendorCreditTopup(Request $request){
         $vendorId = $request->vendorId;
@@ -39,12 +77,39 @@ class adminController extends Controller
         $transType = $request->transType;
         $creditsBefore = $request->creditsBefore;
         $details = $request->details;
+        $rate = $request->rate;
         $amount = $request->amount;
-        $creditsAfter = ceil(intval($amount) / 40);
-        $creditsAfter += intval($creditsBefore);
-        $creditsAfter = strval($creditsAfter);
-        $admin = DB::insert("insert into transaction values(DEFAULT, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [$vendorId, '0', $transRef, $transType, $amount, $creditsBefore, $creditsAfter, $details, 'success', now(), now()]);
-        DB::update("update vendor set credits = ?, updated_at = ? where vendorId = ?", [$creditsAfter, now(), $vendorId]);
-        return "Suceess";
+        $creditsAfter = $creditsBefore;
+        try{
+            $creditsAfter = ceil(intval($amount) / intval($rate));
+            $creditsAfter += intval($creditsBefore);
+            $creditsAfter = strval($creditsAfter);
+            $admin = DB::insert("insert into transaction values(DEFAULT, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [$vendorId, '0', $transRef, $transType, $amount, $creditsBefore, $creditsAfter, $details, 'success', now(), now()]);
+            DB::update("update vendor set credits = ?, updated_at = ? where vendorId = ?", [$creditsAfter, now(), $vendorId]);
+            return "Suceess";
+        }
+        catch(Exception $e){
+            return "There was an error updating, ".$e->getMessage();
+        }
+    }
+
+
+
+    function vendorEdit(Request $request){
+        $vendorId = $request->vendorId;
+        $vendorName = $request->vendorName;
+        $rate = $request->rate;
+        $email = $request->email;
+        try{
+            $affected = DB::table('vendor')->where('vendorId', $vendorId)->update(['rate' => $rate]);
+        }
+        catch(Exception $e){
+            return "There was an error updating, ".$e->getMessage();
+        }
+    }
+
+    function getTransactionsMaker(){
+        $transactions = DB::select("select * from transaction");
+        return view("/admin/maker/transactions", ['transactions' => $transactions]);
     }
 }

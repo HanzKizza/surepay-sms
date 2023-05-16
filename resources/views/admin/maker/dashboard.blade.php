@@ -24,7 +24,7 @@
         <link rel="shortcut icon" href="{{ asset('assets/images/surepay_logo.jpeg') }}" type="image/x-icon">
         <script src="{{ asset('assets/js/dashboard.js') }}"></script>
         <link rel="stylesheet" href="{{ asset('assets/css/dashboard.css') }}">
-        
+
     </head>
     <body>
         <div class="container-fluid">
@@ -37,17 +37,17 @@
                     </div>
 
                     <div class="menu-items container-fluid my-1 p-0 pt-1">
-                        <!-- <a class="menu-item d-flex align-items-center text-white" id="singlesms" href="/user/singlesms">
-                            <i class="fa fa-sms mx-3" style="width:15px"></i> 
-                            <span>Single sms</span>
+                        <a class="menu-item d-flex align-items-center text-white" id="home" href="/admin/maker/home">
+                            <i class="fa fa-home mx-3" style="width:15px"></i>
+                            <span>Home</span>
                         </a>
-                        <a class="menu-item d-flex align-items-center text-white" id="bulksms" href="/user/bulksms">
-                            <i class="fa fa-comments mx-3" style="width:15px"></i> 
-                            <span>Bulk sms</span>
-                        </a> -->
-                        <a class="menu-item d-flex align-items-center text-white" id="vendors" href="/admin/vendors">
-                            <i class="fa fa-users mx-3" style="width:15px"></i> 
+                        <a class="menu-item d-flex align-items-center text-white" id="vendors" href="/admin/maker/vendors">
+                            <i class="fa fa-users mx-3" style="width:15px"></i>
                             <span>Vendors</span>
+                        </a>
+                        <a class="menu-item d-flex align-items-center text-white" id="vendors" href="/admin/maker/transactions">
+                            <i class="fa fa-exchange mx-3" style="width:15px"></i>
+                            <span>Transactions</span>
                         </a>
                     </div>
                 </div>

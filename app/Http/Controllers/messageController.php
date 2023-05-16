@@ -15,8 +15,10 @@ class messageController extends Controller
         $message->messageId = 1;
         $message->phoneNumber = $request->phoneNumber;
         $message->message = $request->message;
-        $message->clientId = $request->clientId;
-        $message->sender = $request->sender;
+        $message->vendorId = session("user")[0]->vendorId;
+        $message->userId = session("user")[0]->userId;
+        $message->sender = session("user")[0]->name;
+        $message->service = "SMS-Portal";
         // $message->save();
         // DB::insert("insert into queue values (DEFAULT, {$message->id})");
         // Encode the message object as JSON
@@ -36,8 +38,10 @@ class messageController extends Controller
             $message->messageId = 1;
             $message->phoneNumber = $receipient;
             $message->message = $messageText;
-            $message->clientId = $clientId;
-            $message->sender = $sender;
+            $message->vendorId = session("user")[0]->vendorId;
+            $message->userId = session("user")[0]->userId;
+            $message->sender = session("user")[0]->name;
+            $message->service = "SMS-Portal";
             array_push($messages, $message);
             // var_dump($message);
             // $message->save();
@@ -51,16 +55,16 @@ class messageController extends Controller
 
     function sendCustomMessage(Request $request){
         $parsedMessages = array();
-        $clientId = $request->clientId;
-        $sender = $request->sender;
         $messages = json_decode($request->messages);
         foreach($messages as $data){
             $message = new message();
             $message->messageId = 1;
             $message->phoneNumber = $data[0];
             $message->message = $data[1];
-            $message->clientId = $clientId;
-            $message->sender = $sender;
+            $message->vendorId = session("user")[0]->vendorId;
+            $message->userId = session("user")[0]->userId;
+            $message->sender = session("user")[0]->name;
+            $message->service = "SMS-Portal";
             array_push($parsedMessages, $message);
             // echo $message->message;
             // $message->save();
@@ -95,7 +99,7 @@ class messageController extends Controller
         ));
 
         // Execute the cURL request
-        $response = curl_exec($curl);  
+        $response = curl_exec($curl);
 
         if(curl_errno($curl)) {
             $error_msg = curl_error($curl);
@@ -132,7 +136,7 @@ class messageController extends Controller
         ));
 
         // Execute the cURL request
-        $response = curl_exec($curl);  
+        $response = curl_exec($curl);
 
         if(curl_errno($curl)) {
             $error_msg = curl_error($curl);

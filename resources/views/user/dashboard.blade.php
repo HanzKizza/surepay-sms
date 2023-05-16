@@ -20,11 +20,12 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
         <link rel="shortcut icon" href="{{ asset('assets/images/surepay_logo.jpeg') }}" type="image/x-icon">
         <script src="{{ asset('assets/js/dashboard.js') }}"></script>
         <link rel="stylesheet" href="{{ asset('assets/css/dashboard.css') }}">
-        
+
     </head>
     <body>
         <div class="container-fluid">
@@ -36,25 +37,25 @@
                         <img src="{{ asset('assets/images/surepay_logo.jpeg') }}" class="img-fluid"/>
                     </div>
 
-                    <div class="menu-items container-fluid my-4 p-0 pt-5">
-                        <a class="menu-item d-flex align-items-center text-white" id="phonebook">
-                            <i class="fa fa-home mx-3" style="width:15px"></i> 
-                            <span>Phonebook</span>
+                    <div class="menu-items container-fluid my-2 p-0 pt-0">
+                        <a class="menu-item d-flex align-items-center text-white" id="dashboard" href="/user/home">
+                            <i class="fa fa-home mx-3" style="width:15px"></i>
+                            <span>Dashboard</span>
                         </a>
                         <a class="menu-item d-flex align-items-center text-white" id="singlesms" href="/user/singlesms">
-                            <i class="fa fa-sms mx-3" style="width:15px"></i> 
+                            <i class="fa fa-sms mx-3" style="width:15px"></i>
                             <span>Single sms</span>
                         </a>
                         <a class="menu-item d-flex align-items-center text-white" id="bulksms" href="/user/bulksms">
-                            <i class="fa fa-comments mx-3" style="width:15px"></i> 
+                            <i class="fa fa-comments mx-3" style="width:15px"></i>
                             <span>Bulk sms</span>
                         </a>
                         <a class="menu-item d-flex align-items-center text-white" id="customsms" href="/user/customsms">
-                            <i class="fa fa-chess-queen mx-3" style="width:15px"></i> 
+                            <i class="fa fa-chess-queen mx-3" style="width:15px"></i>
                             <span>Custom sms</span>
                         </a>
                         <a class="menu-item d-flex align-items-center text-white" id="outbox" href="/user/outbox">
-                            <i class="fas fa-inbox mx-3" style="width:15px"></i> 
+                            <i class="fas fa-inbox mx-3" style="width:15px"></i>
                             <span>Outbox</span>
                         </a>
                     </div>
@@ -76,9 +77,6 @@
                                 <i class="fa fa-briefcase text-muted" style="padding-top: 5px"></i>
                                 <h6 class="mt-1 mx-2">{{ session('user')[0]->credits }}</h6>
                             </a>
-
-                            <i class="fa fa-user-group text-muted" style="margin-right: 10px; padding-top: 5px"></i>
-                            <h6 class="mt-1 mx-2">14</h6>
 
                             <h6 class="mt-1 mx-2">{{ session('user')[0]->name }}</h6>
                         </div>

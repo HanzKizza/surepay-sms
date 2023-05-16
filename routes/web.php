@@ -24,7 +24,6 @@ Route::get('/', function () {
 Route::get('/user/login', function () { return view('user.login', ['error'=> false]); });
 Route::post('/user/verifyUser', 'vendorController@verifyUser')->name('verifyUser');
 Route::get('/user/signout', 'vendorController@signout');
-
 Route::middleware(['call-function-for-users'])->group(function () {
     Route::get('/user/home', function () { return view('user.home'); });
     Route::get('/user/outbox', 'vendorController@loadOutBox');
@@ -36,15 +35,30 @@ Route::middleware(['call-function-for-users'])->group(function () {
 });
 
 
+
+
+
+
 Route::get('/admin/login', function () { return view('/admin/login', ['error'=> false]); });
 Route::post('/admin/verifyAdmin', 'adminController@verifyAdmin');
 Route::get('/admin/home', function () { return view('admin/home'); });
-Route::post('/admin/vendorCreditTopup', 'adminController@vendorCreditTopup');
-// Route::get('/admin/outbox', 'adminController@loadOutBox');
-Route::get('/admin/vendors', 'adminController@getVendors');
-Route::get('/admin/bulksms', function (){ return view("/admin/bulksms"); });
-Route::get('/admin/singlesms', function (){ return view("/admin/singlesms"); });
 Route::get('/admin/signout', 'adminController@signout');
+
+
+
+Route::get('/admin/maker/home', function () { return view('admin/maker/home'); });
+Route::post('/admin/maker/initiateVendorTopUp', 'adminController@initiateVendorTopUp');
+Route::post('/admin/maker/vendorEdit', 'adminController@vendorEdit');
+Route::get('/admin/maker/vendors', 'adminController@getVendors');
+Route::get('/admin/maker/transactions', 'adminController@getTransactionsMaker');
+
+Route::get('/admin/checker/home', function () { return view('admin/checker/home'); });
+Route::post('/admin/vendor/checkerCreditTopup', 'adminController@vendorCreditTopup');
+Route::post('/admin/vendorEdit', 'adminController@vendorEdit');
+Route::get('/admin/checker/vendors', 'adminController@getVendors');
+
+
+
 
 
 
@@ -60,6 +74,11 @@ Route::middleware(['call-function-for-vendors'])->group(function () {
     Route::get('/vendor/transactions', 'vendorController@getTransactions');
     Route::get('/vendor/users', 'vendorController@getUsers');
     Route::post('/vendor/manageUser', 'vendorController@manageUser');
+    Route::post('/vendor/messageCountByDay', 'vendorController@messageCountByDay');
+    Route::get('/vendor/affiliates', 'vendorController@getAffiliates');
+    Route::get('/vendor/registerAffiliate', function () {return view('vendor.registerAffiliate');});
+    Route::post('/vendor/creditAffiliate', 'vendorController@creditAffiliate');
+    Route::post('/vendor/createAffiliate', 'vendorController@createAffiliate')->name('createAffiliate');
 });
 
 
