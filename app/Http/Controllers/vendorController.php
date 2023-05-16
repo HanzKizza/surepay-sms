@@ -115,12 +115,49 @@ class vendorController extends Controller
 
 
     function autoCreditTopup(Request $request){
-        $vendorId = $request->vendorId;
-        $userId = $request->userId;
-        $telecom = $request->telecom;
-        $amount = $request->amount;
-        $phoneNumber = $request->phoneNumber;
-        // make call to mommo api
+        
+    $vendorId = $request->vendorId;
+    $userId = $request->userId;
+    $telecom = $request->telecom;
+    $amount = $request->amount;
+    $creditsBefore = $request->creditsBefore;
+    $phoneNumber = $request->phoneNumber;
+
+    // Prepare the request data
+    $requestData = [
+        'vendorId' => $vendorId,
+        'userId' => $userId,
+        'telecom' => $telecom,
+        'amount' => $amount,
+        'creditsBefore' => $creditsBefore,
+        'phoneNumber' => $phoneNumber
+    ];
+
+    // Convert the request data to JSON
+    $jsonData = json_encode($requestData);
+
+    // Initialize cURL
+    $curl = curl_init();
+
+    // Set cURL options
+    curl_setopt($curl, CURLOPT_URL, 'http://localhost:8090/payments/top-up');
+    curl_setopt($curl, CURLOPT_POST, true);
+    curl_setopt($curl, CURLOPT_POSTFIELDS, $jsonData);
+    curl_setopt($curl, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+
+    // Execute the cURL request
+    $response = curl_exec($curl);
+
+    // Check for cURL errors
+    if (curl_errno($curl)) {
+        $errorMessage = curl_error($curl);
+        // Handle the error appropriately (e.g., log it, throw an exception)
+    }
+
+    // Close cURL
+    curl_close($curl);
+    
         return json_encode(array(true, 'transaction initiated'));
     }
 
