@@ -109,7 +109,7 @@ class adminController extends Controller
     }
 
     function getTransactionsMaker(){
-        $transactions = DB::select("select * from transaction");
+        $transactions = DB::select("select * from transaction ORDER BY created_at DESC");
         return view("/admin/maker/transactions", ['transactions' => $transactions]);
     }
 }
