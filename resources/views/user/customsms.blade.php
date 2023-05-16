@@ -77,6 +77,7 @@
                 $(".totalMessages").text(messages.length)
 
                 for(i = 0; i < messages.length; i++){
+
                     myHtml = "<tr><td>"+messages[i][0]+"</td><td>"+messages[i][1]+"</td></tr>";
                     $("#generatedMessages tbody").append(myHtml)
                     if(i == 99){

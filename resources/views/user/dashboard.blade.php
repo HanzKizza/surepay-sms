@@ -37,10 +37,10 @@
                         <img src="{{ asset('assets/images/surepay_logo.jpeg') }}" class="img-fluid"/>
                     </div>
 
-                    <div class="menu-items container-fluid my-4 p-0 pt-5">
-                        <a class="menu-item d-flex align-items-center text-white" id="phonebook">
+                    <div class="menu-items container-fluid my-2 p-0 pt-0">
+                        <a class="menu-item d-flex align-items-center text-white" id="dashboard" href="/user/home">
                             <i class="fa fa-home mx-3" style="width:15px"></i>
-                            <span>Phonebook</span>
+                            <span>Dashboard</span>
                         </a>
                         <a class="menu-item d-flex align-items-center text-white" id="singlesms" href="/user/singlesms">
                             <i class="fa fa-sms mx-3" style="width:15px"></i>
