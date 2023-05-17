@@ -9,6 +9,11 @@
 @section('content')
 <div class="container mt-3">
     <div class="w-50 mt-4">
+      @if ($errors->has('email'))
+            <div class="alert alert-danger">
+                {{ $errors->first('email') }}
+            </div>
+        @endif
         <form id="createAffiliate" action="{{ route('createAffiliate') }}" method="post">
             @csrf
             <div class="card mb-4">
