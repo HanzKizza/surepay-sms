@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\Request;
 use App\Models\message;
 
@@ -239,8 +241,18 @@ class vendorController extends Controller
         $referrorId = session("vendor")[0]->vendorId;
         $pwd = $this->getRandomPassword();
         $status = "active";
-        DB::insert("insert into vendor values(DEFAULT, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [$name, $contact, $email, $rate, $credits, $type, $referrorId, $pwd, $status, now(), now()]);
-        return $this->getAffiliates();
+         // Check if the email already exists in the vendor table
+        $existingVendor = DB::select("SELECT * FROM vendor WHERE email = ?", [$email]);
+
+        if (!empty($existingVendor)) {
+            // Email already exists, display an error message and redirect back
+            return Redirect::back()->withInput()->withErrors(['email' => 'Email already exists']);
+        }else{
+             DB::insert("insert into vendor values(DEFAULT, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [$name, $contact, $email, $rate, $credits, $type, $referrorId, $pwd, $status, now(), now()]);
+         // Send the password to the provided email
+        // $this->sendPasswordByEmail($email, $pwd);
+        }
+       return $this->getAffiliates();
     }
 
 
@@ -253,6 +265,18 @@ class vendorController extends Controller
             $string .= $chars[rand(0, strlen($chars) - 1)];
         }
         return $string;
+    }
+
+    function sendPasswordByEmail($email, $password)
+    {
+        // You can customize the email subject and body as per your requirements
+        $subject = "Your New Affiliate Account Password";
+        $body = "Welcome to the Surepay SMS platform! We're excited to have you on board. Your password is: " . $password;
+        
+        // Send the email
+        Mail::raw($body, function ($message) use ($email, $subject) {
+            $message->to($email)->subject($subject);
+        });
     }
 
 
