@@ -186,7 +186,10 @@ class adminController extends Controller
 
     function approveTransaction(Request $request){
         $transactionId = $request->transactionId;
-        $transaction = DB::select("select * from transaction where transaction_id = ?");
-
+        $transaction = DB::select("select * from transaction where transaction_id = ?", [$transactionId]);
+        if($transaction){
+            $vendorId = $transaction[0]->vendorId;
+            $vendor = DB::select("select * from vendor where vendorId = ?", ['vendorId' => $vendorId]);
+        }
     }
 }
