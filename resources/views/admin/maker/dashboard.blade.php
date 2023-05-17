@@ -37,11 +37,11 @@
                     </div>
 
                     <div class="menu-items container-fluid my-1 p-0 pt-1">
-                        <a class="menu-item d-flex align-items-center text-white" id="home" href="/admin/maker/home">
+                        <a class="menu-item d-flex align-items-center text-white" id="home" href="/admin/home">
                             <i class="fa fa-home mx-3" style="width:15px"></i>
                             <span>Home</span>
                         </a>
-                        <a class="menu-item d-flex align-items-center text-white" id="vendors" href="/admin/maker/vendors">
+                        <a class="menu-item d-flex align-items-center text-white" id="vendors" href="/admin/vendors">
                             <i class="fa fa-users mx-3" style="width:15px"></i>
                             <span>Vendors</span>
                         </a>
