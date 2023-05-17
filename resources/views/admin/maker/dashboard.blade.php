@@ -45,7 +45,7 @@
                             <i class="fa fa-users mx-3" style="width:15px"></i>
                             <span>Vendors</span>
                         </a>
-                        <a class="menu-item d-flex align-items-center text-white" id="vendors" href="/admin/maker/transactions">
+                        <a class="menu-item d-flex align-items-center text-white" id="vendors" href="/admin/transactions">
                             <i class="fa fa-exchange mx-3" style="width:15px"></i>
                             <span>Transactions</span>
                         </a>

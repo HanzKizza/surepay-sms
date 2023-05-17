@@ -41,7 +41,7 @@ Route::middleware(['call-function-for-users'])->group(function () {
 
 Route::get('/admin/login', function () { return view('/admin/login', ['error'=> false]); });
 Route::post('/admin/verifyAdmin', 'adminController@verifyAdmin');
-Route::get('/admin/home', function () { return view('admin/home'); });
+Route::get('/admin/home', 'adminController@home');
 Route::get('/admin/signout', 'adminController@signout');
 
 
@@ -49,13 +49,16 @@ Route::get('/admin/signout', 'adminController@signout');
 Route::get('/admin/maker/home', function () { return view('admin/maker/home'); });
 Route::post('/admin/maker/initiateVendorTopUp', 'adminController@initiateVendorTopUp');
 Route::post('/admin/maker/vendorEdit', 'adminController@vendorEdit');
-Route::get('/admin/maker/vendors', 'adminController@getVendors');
-Route::get('/admin/maker/transactions', 'adminController@getTransactionsMaker');
+Route::get('/admin/vendors', 'adminController@getVendors');
+Route::get('/admin/transactions', 'adminController@getTransactions');
+Route::get('/admin/pendingTransactions', 'adminController@getPendingTransactions');
+Route::get('/admin/successfullTransactions', 'adminController@getSuccessfullTransactions');
+Route::get('/admin/rejectedTransactions', 'adminController@getRejectedTransactions');
+Route::post('/admin/approveTransaction', 'adminController@approveTransaction');
 
 Route::get('/admin/checker/home', function () { return view('admin/checker/home'); });
 Route::post('/admin/vendor/checkerCreditTopup', 'adminController@vendorCreditTopup');
 Route::post('/admin/vendorEdit', 'adminController@vendorEdit');
-Route::get('/admin/checker/vendors', 'adminController@getVendors');
 
 
 

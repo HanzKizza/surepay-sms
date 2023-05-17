@@ -1,4 +1,4 @@
-@extends('admin.dashboard')
+@extends('admin.checker.dashboard')
 @section('title', 'SurePay: Vendors')
 @section('content')
     <div class="container-fluid">
@@ -31,9 +31,9 @@
                 @endforeach
             </tbody>
         </table>
-  
 
-        
+
+
         <div id="vendorCredit" class="container-fluid">
             <div class="d-flex flex-row-reverse"><button class="btn text-danger mt-1" onclick="$('#vendorCredit').hide()"><i class="fa fa-times"></i></button></div>
             <div class="container">
@@ -158,7 +158,7 @@
         overflow-y: auto;
         display: none;
     }
-    
+
     #vendorCredit label{
         text-align: center;
         width: 100%;

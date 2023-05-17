@@ -28,6 +28,19 @@ class adminController extends Controller
 
 
 
+    function home(){
+        $admin = session("admin");
+        if(strcasecmp("maker", $admin[0]->role) == 0){
+            return redirect("/admin/maker/home");
+        }
+        else if(strcasecmp("checker", $admin[0]->role) == 0){
+            return redirect("/admin/checker/home");
+        }
+        return redirect("/admin/home");
+    }
+
+
+
     function signout(){
         session()->forget('user');
         return redirect("/admin/login");
@@ -46,6 +59,8 @@ class adminController extends Controller
         }
         return view("admin.vendors", ['vendors' => $vendors]);
     }
+
+
 
     function initiateVendorTopUp(Request $request){
         $vendorId = $request->vendorId;
@@ -69,6 +84,8 @@ class adminController extends Controller
             return "There was an error updating, ".$e->getMessage();
         }
     }
+
+
 
     function vendorCreditTopup(Request $request){
         $vendorId = $request->vendorId;
@@ -108,8 +125,68 @@ class adminController extends Controller
         }
     }
 
-    function getTransactionsMaker(){
+
+    function getTransactions(){
+        $admin = session("admin");
         $transactions = DB::select("select * from transaction ORDER BY created_at DESC");
+        echo $admin[0]->role;
+        if(strcasecmp("maker", $admin[0]->role) == 0){
+            return view("/admin/maker/transactions", ['transactions' => $transactions]);
+        }
+        else if(strcasecmp("checker", $admin[0]->role) == 0){
+            return view("/admin/checker/transactions", ['transactions' => $transactions]);
+        }
         return view("/admin/maker/transactions", ['transactions' => $transactions]);
+    }
+
+
+
+    function getPendingTransactions(){
+        $admin = session("admin");
+        $transactions = DB::select("select * from transaction where status = ? ORDER BY created_at DESC", ["pending"]);
+        echo $admin[0]->role;
+        if(strcasecmp("maker", $admin[0]->role) == 0){
+            return view("/admin/maker/transactions", ['transactions' => $transactions]);
+        }
+        else if(strcasecmp("checker", $admin[0]->role) == 0){
+            return view("/admin/checker/pendingTransactions", ['transactions' => $transactions]);
+        }
+        return view("/admin/maker/transactions", ['transactions' => $transactions]);
+    }
+
+
+
+    function getSuccessfullTransactions(){
+        $admin = session("admin");
+        $transactions = DB::select("select * from transaction where status = ? ORDER BY created_at DESC", ["success"]);
+        echo $admin[0]->role;
+        if(strcasecmp("maker", $admin[0]->role) == 0){
+            return view("/admin/maker/transactions", ['transactions' => $transactions]);
+        }
+        else if(strcasecmp("checker", $admin[0]->role) == 0){
+            return view("/admin/checker/transactions", ['transactions' => $transactions]);
+        }
+        return view("/admin/maker/transactions", ['transactions' => $transactions]);
+    }
+
+
+
+    function getRejectedTransactions(){
+        $admin = session("admin");
+        $transactions = DB::select("select * from transaction where status = ? ORDER BY created_at DESC", ["rejected"]);
+        echo $admin[0]->role;
+        if(strcasecmp("maker", $admin[0]->role) == 0){
+            return view("/admin/maker/transactions", ['transactions' => $transactions]);
+        }
+        else if(strcasecmp("checker", $admin[0]->role) == 0){
+            return view("/admin/checker/transactions", ['transactions' => $transactions]);
+        }
+        return view("/admin/maker/transactions", ['transactions' => $transactions]);
+    }
+
+    function approveTransaction(Request $request){
+        $transactionId = $request->transactionId;
+        $transaction = DB::select("select * from transaction where transaction_id = ?");
+
     }
 }

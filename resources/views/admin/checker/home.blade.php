@@ -1,4 +1,4 @@
-@extends('admin.dashboard')
+@extends('admin.checker.dashboard')
 @section('title', 'SurePay Admin')
 
 
