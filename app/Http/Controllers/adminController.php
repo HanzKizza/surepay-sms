@@ -184,12 +184,37 @@ class adminController extends Controller
         return view("/admin/maker/transactions", ['transactions' => $transactions]);
     }
 
+
+
     function approveTransaction(Request $request){
-        $transactionId = $request->transactionId;
-        $transaction = DB::select("select * from transaction where transaction_id = ?", [$transactionId]);
-        if($transaction){
+        try{
+            $transactionId = $request->transactionId;
+            $transaction = DB::select("select * from transaction where transaction_id = ?", [$transactionId]);
             $vendorId = $transaction[0]->vendorId;
-            $vendor = DB::select("select * from vendor where vendorId = ?", ['vendorId' => $vendorId]);
+            $vendor = DB::select("select * from vendor where vendorId = ?", [$vendorId]);
+            $credits = $vendor[0]->credits;
+            $rate = $vendor[0]->rate;
+            $amount = $transaction[0]->amount;
+            $creditsToAdd = ceil(intval($amount) / intval($rate));
+            $creditsAfter = intval($credits) + intval($creditsToAdd);
+            DB::update("update vendor set credits = ?, updated_at = ? where vendorId = ?", [$creditsAfter, now(), $vendorId]);
+            DB::update("update transaction set status = ?, creditsBefore = ?, creditsAfter = ? where transaction_id =?", ["approved", $credits, $creditsAfter, $transactionId]);
+            echo "Transaction approved successfully";
+        }catch(Exception $e){
+            echo $e->getMessage();
+        }
+    }
+
+
+
+    function rejectTransaction(Request $request){
+        try{
+            $transactionId = $request->transactionId;
+
+            DB::update("update transaction set status ='rejected' where transaction_id =?", [$transactionId]);
+            echo "Transaction rejected successfully";
+        }catch(Exception $e){
+            echo $e->getMessage();
         }
     }
 }

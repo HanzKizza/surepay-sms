@@ -55,6 +55,7 @@ Route::get('/admin/pendingTransactions', 'adminController@getPendingTransactions
 Route::get('/admin/successfullTransactions', 'adminController@getSuccessfullTransactions');
 Route::get('/admin/rejectedTransactions', 'adminController@getRejectedTransactions');
 Route::post('/admin/approveTransaction', 'adminController@approveTransaction');
+Route::post('/admin/rejectTransaction', 'adminController@rejectTransaction');
 
 Route::get('/admin/checker/home', function () { return view('admin/checker/home'); });
 Route::post('/admin/vendor/checkerCreditTopup', 'adminController@vendorCreditTopup');

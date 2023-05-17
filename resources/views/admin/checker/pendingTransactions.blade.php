@@ -59,7 +59,7 @@
             $("#loader").show("2500")
             var formdata = new FormData()
             formdata.append('_token', "{{ csrf_token() }}")
-            formdata.append('transaction_id', transactionId)
+            formdata.append('transactionId', transactionId)
             $.ajax({
                 type: "POST",
                 url: "/admin/approveTransaction",
@@ -79,7 +79,25 @@
 
         function rejectTransaction(el){
             var transactionId = $(el).parent().parent().attr('class')
-            alert(transactionId)
+            $("#loader").show("2500")
+            var formdata = new FormData()
+            formdata.append('_token', "{{ csrf_token() }}")
+            formdata.append('transactionId', transactionId)
+            $.ajax({
+                type: "POST",
+                url: "/admin/rejectTransaction",
+                data: formdata,
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    alert(response)
+                    location.reload()
+                },
+                error:function(response){
+                    alert("Something went wrong, please try again later")
+                }
+            });
+            // alert(transactionId)
         }
     </script>
 
