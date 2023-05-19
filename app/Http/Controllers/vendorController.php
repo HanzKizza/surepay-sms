@@ -117,7 +117,7 @@ class vendorController extends Controller
 
 
     function autoCreditTopup(Request $request){
-        
+
     $vendorId = $request->vendorId;
     $userId = $request->userId;
     $telecom = $request->telecom;
@@ -159,7 +159,7 @@ class vendorController extends Controller
 
     // Close cURL
     curl_close($curl);
-    
+
         return json_encode(array(true, 'transaction initiated'));
     }
 
@@ -250,7 +250,7 @@ class vendorController extends Controller
         }else{
              DB::insert("insert into vendor values(DEFAULT, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [$name, $contact, $email, $rate, $credits, $type, $referrorId, $pwd, $status, now(), now()]);
          // Send the password to the provided email
-        // $this->sendPasswordByEmail($email, $pwd);
+        $this->sendPasswordByEmail($email, $pwd);
         }
        return $this->getAffiliates();
     }
@@ -272,7 +272,7 @@ class vendorController extends Controller
         // You can customize the email subject and body as per your requirements
         $subject = "Your New Affiliate Account Password";
         $body = "Welcome to the Surepay SMS platform! We're excited to have you on board. Your password is: " . $password;
-        
+
         // Send the email
         Mail::raw($body, function ($message) use ($email, $subject) {
             $message->to($email)->subject($subject);
