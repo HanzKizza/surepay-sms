@@ -74,7 +74,7 @@ class vendorController extends Controller
             ) AS date_list
             LEFT JOIN (
                 SELECT DATE(created_at) AS message_date, COUNT(*) AS message_count
-                FROM messages
+                FROM message
                 WHERE created_at >= DATE(NOW()) - INTERVAL 30 DAY
                 GROUP BY message_date
             ) AS message_count ON date_list.date = message_count.message_date
@@ -99,9 +99,9 @@ class vendorController extends Controller
 
 
     function loadOutBox(){
-        $clientId = session('user')[0]->userId;
-        $messages = DB::select("SELECT * FROM messages WHERE clientId = $clientId ORDER BY created_at DESC");
-        return view("user.outbox", ['messages' => $messages, 'clientId' => $clientId]);
+        $userId = session('user')[0]->userId;
+        $messages = DB::select("SELECT * FROM message WHERE userId = $userId ORDER BY created_at DESC");
+        return view("user.outbox", ['messages' => $messages, 'userId' => $userId]);
     }
 
 

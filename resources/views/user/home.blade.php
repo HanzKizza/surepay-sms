@@ -41,15 +41,15 @@
 </style>
 
 <script>
-        $(document).ready(function(){
+        $(document).ready(async function(){
                 var xArray = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,20];
-                var yArray = [7,8,8,9,9,9,10,11,14,14,15,23,32,12,32,3,0, 9, 19,45,21,22,23,15,13,31,32,21,16,21];
-
+                //var yArray = [7,8,8,9,9,9,10,11,14,14,15,23,32,12,32,3,0, 9, 19,45,21,22,23,15,13,31,32,21,16,21];
+                var yArray = await getMessagesPer30Days();
                 // Define Data
                 var data = [{
                 x: xArray,
                 y: yArray,
-                mode:"markers",
+                mode:"lines",
                 type:"scatter"
                 }];
 
@@ -59,11 +59,33 @@
                 // Define Layout
                 var layout = {
                 xaxis: {range: [0, 30], title: "Days"},
-                yaxis: {range: [0, max], title: "SMS"},  
+                yaxis: {range: [0, max], title: "SMS"},
                 title: "Sms Last 30 days"
                 };
 
                 // Display using Plotly
                 Plotly.newPlot("myPlot", data, layout);
         })
+
+
+        function getMessagesPer30Days(){
+                return new Promise(function(resolve, reject) {
+                        var formdata = new FormData()
+                        formdata.append('_token', "{{ csrf_token() }}")
+                        $.ajax({
+                        type: "POST",
+                        url: "/vendor/messageCountByDay",
+                        data: formdata,
+                        processData: false,
+                        contentType: false,
+                        success: function (response) {
+                                var arraydata = JSON.parse(response);
+                                resolve(arraydata);
+                        },
+                        error:function(response){
+                                reject("Something went wrong, please try again later");
+                        }
+                        });
+                });
+        }
 </script>
