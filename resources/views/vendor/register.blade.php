@@ -20,7 +20,7 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
         
     </head>
-    <body>
+    <body id="register-vendor">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-md-8 mt-5">
@@ -111,3 +111,23 @@
 
     </body>
 </html>
+<style>
+     #register-vendor{
+        position:fixed;
+        height: 100%;
+        width: 100% !important;
+        top: 0px;
+        overflow-y: auto;
+        background-size:cover;
+        background-repeat: no-repeat;
+        /* opacity: 0.1; */
+        font-family: Georgia, 'Times New Roman', Times, serif;
+        background-image: url({{ asset('assets/images/bg.jpeg') }});
+    }
+    @media (max-width: 767px) {
+    /* Styles for mobile devices with screen width up to 767px */
+    #register-vendor {
+        background-image: none;
+    }
+}
+</style>
