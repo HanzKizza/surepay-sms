@@ -256,6 +256,8 @@ class vendorController extends Controller
     }
 
 
+
+
     function getRandomPassword(){
         $chars = '0123456789abcdefghijklmnopqrstuvwxyz';
 
@@ -266,6 +268,8 @@ class vendorController extends Controller
         }
         return $string;
     }
+
+
 
     function sendPasswordByEmail($email, $password)
     {
