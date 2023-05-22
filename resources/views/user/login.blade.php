@@ -21,26 +21,28 @@
 
     </head>
     <body>
-        <div class="container-fluid d-flex align-items-center justify-content-center vh-100" id="main-container">
-            <div class="card w-25">
-                <div class="card-header">
-                    <h4 class="text-center">SurePay SMS Platform</h4>
-                </div>
-                <div class="card-body">
-                    <form method="POST" action="/user/verifyUser">
-                        @csrf
-                        <label for="email">Email</label>
-                        <input type="email" name="email" id="email" placeholder="you@example.com" class="form-control my-1" required/>
-                        <label for="email">Password</label>
-                        <input type="password" name="password" id="password" placeholder="your secret" class="form-control my-1" required/>
-                        @if($error == true)
-                            <h5 class="text-danger my-3">Incorrect username or password</h5>
-                        @endif
-                        <div class="d-flex my-4" style="gap:20px">
-                            <button type="btn" class="btn btn-outline-success w-50 py-1">Login</button>
-                            <button type="reset" class="btn btn-outline-danger w-50 py-1">Reset</button>
-                        </div>
-                    </form>
+        <div id="main-container">
+            <div class="container-fluid d-flex align-items-center justify-content-center vh-100">
+                <div class="card w-25">
+                    <div class="card-header">
+                        <h4 class="text-center">SurePay SMS Platform</h4>
+                    </div>
+                    <div class="card-body">
+                        <form method="POST" action="/user/verifyUser">
+                            @csrf
+                            <label for="email">Email</label>
+                            <input type="email" name="email" id="email" placeholder="you@example.com" class="form-control my-1" required/>
+                            <label for="email">Password</label>
+                            <input type="password" name="password" id="password" placeholder="your secret" class="form-control my-1" required/>
+                            @if($error == true)
+                                <h5 class="text-danger my-3">Incorrect username or password</h5>
+                            @endif
+                            <div class="d-flex my-4" style="gap:20px">
+                                <button type="btn" class="btn btn-outline-success w-50 py-1">Login</button>
+                                <button type="reset" class="btn btn-outline-danger w-50 py-1">Reset</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
@@ -50,14 +52,20 @@
 <style>
      #main-container{
         position:fixed;
-        height: 100%;
+        height: 100% !important;
         width: 100% !important;
         top: 0px;
         overflow-y: auto;
-        background-size:100%, 100%;
+        background-size: 100% 100%;
         background-repeat: no-repeat;
         /* opacity: 0.1; */
         font-family: Georgia, 'Times New Roman', Times, serif;
         background-image: url({{ asset('assets/images/bg.jpeg') }});
+    }
+
+    @media only screen and (max-width: 600px) {
+        .card{
+            width: 100% !important;
+        }
     }
 </style>
