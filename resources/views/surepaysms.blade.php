@@ -133,7 +133,7 @@
         width: 100% !important;
         top: 0px;
         overflow-y: auto;
-        background-size:100%, 100%;
+        background-size:100% 100%;
         background-repeat: no-repeat;
         /* opacity: 0.1; */
         font-family: Georgia, 'Times New Roman', Times, serif;
