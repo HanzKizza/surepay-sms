@@ -1,7 +1,7 @@
 @extends('user.dashboard')
 @section('title', 'SurePay Home')
 @section('content')
-    <div class="container-fluid">
+    <div class="container-fluid mt-4">
             <div class="row">
             <div class="col-md-6">
                 <div class="card w-100">

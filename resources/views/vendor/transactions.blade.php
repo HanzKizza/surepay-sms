@@ -16,8 +16,8 @@
                         <th>Type</th>
                         <th>userId</th>
                         <th>Amount</th>
-                        <th>credits before</th>
-                        <th>credits after</th>
+                        <th>$_before</th>
+                        <th>$_after</th>
                         <th>Details</th>
                         <th>status</th>
                         <th>created_at</th>
@@ -25,7 +25,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    
+
                     @foreach ($transactions as $transaction)
                         <tr>
                            <td>{{ $transaction->transaction_id }}</td>
@@ -43,6 +43,9 @@
                     @endforeach
                 </tbody>
             </table>
+        </div>
+        <div class="col">
+            {{ $transactions->appends(request()->except('page'))->links('pagination::bootstrap-4') }}
         </div>
     </div>
 @endsection

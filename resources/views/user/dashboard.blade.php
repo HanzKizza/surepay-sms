@@ -32,10 +32,10 @@
             <div class="row">
                 <!-- Dashboard Nav Bar -->
                 <div class="col-md-2 vh-100 px-0" id="dashboard_nav">
-                    <!-- logo -->
-                    <div class="container-fluid logo p-0 bg-dark bg-opacity-25">
-                        <img src="{{ asset('assets/images/surepay_logo.jpeg') }}" class="img-fluid"/>
+                    <div class="role mt-4">
+                        <h4 class="text-center text-white">Vendor User</h4>
                     </div>
+                    <hr style="border: dashed 1px yellow">
 
                     <div class="menu-items container-fluid my-2 p-0 pt-0">
                         <a class="menu-item d-flex align-items-center text-white" id="dashboard" href="/user/home">
@@ -59,12 +59,19 @@
                             <span>Outbox</span>
                         </a>
                     </div>
+
+                    <div class="bottom col-sm-3">
+                        <!-- logo -->
+                        <div class="container-fluid logo p-0">
+                            <img src="{{ asset('assets/images/surepay_logo.png') }}" class="img-fluid"/>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- right-->
-                <div class="col-md-10 vh-100 overflow-auto">
+                <div class="col-md-10 vh-100 overflow-auto" style="background-color: #EAFDFC">
                     <!-- customer info -->
-                    <div class="row">
+                    <div class="row top-bar">
                         <div class="container-fluid d-flex flex-row-reverse">
                             <a href="/user/signout" style="margin-left: 10px;" data-toggle="tooltip" data-placement="top" title="Sign out">
                                 <i class="fas fa-power-off text-danger" style="margin-right: 10px; padding-top: 5px"></i>
@@ -82,7 +89,7 @@
                         </div>
                     </div>
                     <!-- Main -->
-                    <div class="row" id="main">
+                    <div class="row mt-2" id="main">
                         @yield('content')
                     </div>
                 </div>
@@ -90,7 +97,6 @@
         </div>
     </body>
 </html>
-
 
 <script>
     function populate(el){
@@ -128,3 +134,7 @@
     }
 
 </script>
+
+<style>
+
+</style>

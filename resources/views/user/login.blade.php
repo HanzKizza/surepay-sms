@@ -43,6 +43,9 @@
                             </div>
                         </form>
                     </div>
+                    <div class="card-footer">
+                        <label>Vendor admin? Login</label> <a href="/vendor/login">here.</a>
+                    </div>
                 </div>
             </div>
         </div>

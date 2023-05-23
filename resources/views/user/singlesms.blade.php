@@ -1,7 +1,7 @@
 @extends('user.dashboard')
 @section('title', 'SurePay Home')
 @section('content')
-    <div class="container-fluid">
+    <div class="container-fluid mt-4">
         <div class="card w-50">
             <div class="card-header bg-primary text-white">
                 <h5>Send single sms</h5>
@@ -10,7 +10,7 @@
                 <h6>Receipient</h6>
                 <form id="sendMessageForm" onsubmit="sendMessage(event)">
                 <!-- <form id="sendMessageForm" method="post" action="{{ route('sendMessage') }}"> -->
-                    
+
                     <input type="tel" name="phoneNumber" id="phoneNumber" class="form-control" />
                     <input type="text" name="sender" id="sender" class="form-control d-none" value="surepay"/>
                     <input type="text" name="clientId" id="clientId" class="form-control d-none" value="1"/>

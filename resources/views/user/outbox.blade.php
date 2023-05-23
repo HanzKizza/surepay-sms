@@ -3,7 +3,7 @@
 @section('content')
     <div class="container-fluid">
         <div class="row">
-            <h5>Outbox: <span class="text-danger">{{ sizeof($messages) }}</span></h5>
+            <h5>Outbox: <span class="text-danger">{{ $messages->total() }}</span></h5>
         </div>
         <div class="row">
             <table class="table table-striped table-bordered table-condensed">
@@ -15,7 +15,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    
+
                     @foreach ($messages as $message)
                         <tr>
                             <td class="text-center">{{ $message->phoneNumber }}</td>
@@ -25,6 +25,9 @@
                     @endforeach
                 </tbody>
             </table>
+        </div>
+        <div class="col">
+            {{ $messages->appends(request()->except('page'))->links('pagination::bootstrap-4') }}
         </div>
     </div>
 @endsection

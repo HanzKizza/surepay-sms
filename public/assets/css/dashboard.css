@@ -1,17 +1,55 @@
 #dashboard_nav{
-    background-color: #2e3192;
+    background-color: #0C134F;
 }
 
 .menu-items .menu-item{
     padding-top: 5px;
     padding-bottom: 5px;
-    background-color: rgba(0, 0, 0, 0.171);
+    /* background-color: rgba(0, 0, 0, 0.171); */
     margin-top: 5%;
     text-decoration: none;
 }
 
 .menu-items .menu-item:hover{
-    background-color: blue;
+    background-color: #1D267D;
     color: #18d26e !important;;
     cursor: pointer;
+}
+
+.bottom{
+    position: absolute;
+    bottom: 0px;
+    width:16.66% !important;
+    /* margin-left: 0.8%; */
+}
+.bottom img{
+    height: 50px;
+    width: 100% !important;
+    /* border-top-left-radius: 20px;
+    border-top-right-radius: 20px; */
+}
+
+.top-bar{
+    position:absolute;
+    right: 5px;
+}
+body{
+    overflow-x: hidden;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey;
+    border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: red;
+    border-radius: 10px;
+}
+
+.card-title{
+    background-color: rgb(21, 179, 0) !important;
+    color: white !important;
 }

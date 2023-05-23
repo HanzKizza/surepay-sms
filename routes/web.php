@@ -26,7 +26,7 @@ Route::post('/user/verifyUser', 'vendorController@verifyUser')->name('verifyUser
 Route::get('/user/signout', 'vendorController@signout');
 Route::middleware(['call-function-for-users'])->group(function () {
     Route::get('/user/home', function () { return view('user.home'); });
-    Route::get('/user/outbox', 'vendorController@loadOutBox');
+    Route::get('/user/outbox', 'vendorController@loadOutBox')->name("user.outbox");
     Route::get('/user/customsms', function (){ return view("/user/customsms"); });
     Route::get('/user/singlesms', function (){ return view("/user/singlesms"); });
     Route::get('/user/bulksms', function (){ return view("/user/bulksms"); });

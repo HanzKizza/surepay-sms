@@ -1,7 +1,7 @@
 @extends('user.dashboard')
 @section('title', 'SurePay Home')
 @section('content')
-<div class="container-fluid">
+<div class="container-fluid mt-4">
     <div class="row">
         <div class="col-md-4">
             <form id="customMessageGenerationForm" onsubmit="generateCustomMessages(event)">
@@ -21,9 +21,10 @@
                                 <div class="server-response"></div>
                         </div>
                     </div>
-                    <div class="card-footer d-flex flex-row-reverse px-1">
-                        <button class="btn btn-outline-success" type="submit" style="width:30%;">Generate</button>
-                        <button class="btn btn-outline-danger" type="reset" style="width:30%; margin-right:20px">Clear</button>
+                    <div class="card-footer d-flex flex-row-reverse px-1" style="gap:10px">
+                        <button class="btn btn-outline-success" type="button" onclick="sendMessages()" style="flex:1">Send <span class="badge totalMessages text-danger">0</span></button>
+                        <button class="btn btn-outline-info" type="submit" style="flex:1">Generate</button>
+                        <button class="btn btn-outline-warning" type="reset" style="flex:1">Clear</button>
                     </div>
                 </div>
             </form>
@@ -33,7 +34,6 @@
         <div class="col-md-8">
             <div class="card w-100">
                 <div class="card-header bg-success text-white d-flex align-items-center flex-row-reverse">
-                <button class="btn btn-outline-warning p-1 py-0" onclick="sendMessages()">Send <span class="badge totalMessages">0</span></button>
                 <input type="number" id="cliendId" value="1" class="d-none"/>
                 <input type="text" id="sender" value="surepay" class="d-none"/>
                 <h5 style="margin-right: 5%;">Generated SMS</h5>

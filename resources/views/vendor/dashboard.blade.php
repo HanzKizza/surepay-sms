@@ -31,10 +31,10 @@
             <div class="row">
                 <!-- Dashboard Nav Bar -->
                 <div class="col-md-2 vh-100 px-0" id="dashboard_nav">
-                    <!-- logo -->
-                    <div class="container-fluid logo p-0 bg-dark bg-opacity-25">
-                        <img src="{{ asset('assets/images/surepay_logo.jpeg') }}" class="img-fluid"/>
+                    <div class="role mt-4">
+                        <h4 class="text-center text-white">Vendor Admin</h4>
                     </div>
+                    <hr style="border: dashed 1px yellow">
 
                     <div class="menu-items container-fluid my-1 p-0 pt-2">
                         <a class="menu-item d-flex align-items-center text-white" id="home" href="/vendor/home">
@@ -45,29 +45,49 @@
                             <i class="fa fa-exchange mx-3" style="width:15px"></i>
                             <span>Transactions</span>
                         </a>
-                        <a class="menu-item d-flex align-items-center text-white" id="users" href="/vendor/users">
+                        <label class="menu-item d-flex align-items-center text-white" onclick="$('#users').toggle('slow')">
                             <i class="fa fa-users mx-3" style="width:15px"></i>
                             <span>Users</span>
-                        </a>
-                        <a class="menu-item d-flex align-items-center text-white" id="users" href="/vendor/adduser">
-                            <i class="fa fa-plus mx-3" style="width:15px"></i>
-                            <span>New user</span>
-                        </a>
-                        <a class="menu-item d-flex align-items-center text-white" id="affiliates" href="/vendor/affiliates">
+                            <i class="fa fa-angle-down text-muted" style="margin-left: 40%; width:10px;"></i>
+                        </label>
+                        <div class="container collapse" id="users">
+                            <a class="menu-item d-flex align-items-center text-muted" href="/vendor/users">
+                                <i class="fa fa-eye mx-3" style="width:10px"></i>
+                                <span>View users</span>
+                            </a>
+                            <a class="menu-item d-flex align-items-center text-muted" href="/vendor/adduser">
+                                <i class="fa fa-plus mx-3" style="width:10px"></i>
+                                <span>Add user</span>
+                            </a>
+                        </div>
+                        <label class="menu-item d-flex align-items-center text-white" onclick="$('#affiliates').toggle('slow')" href="/vendor/affiliates">
                             <i class="fas fa-inbox mx-3" style="width:15px"></i>
                             <span>Affiliates</span>
-                        </a>
-                        <a class="menu-item d-flex align-items-center text-white" id="affiliates" href="/vendor/registerAffiliate">
-                            <i class="fas fa-plus mx-3" style="width:15px"></i>
-                            <span>Register Affiliate</span>
-                        </a>
+                            <i class="fa fa-angle-down text-muted" style="margin-left: 30%; width:10px;"></i>
+                        </label>
+                        <div class="container collapse" id="affiliates">
+                            <a class="menu-item d-flex align-items-center text-muted" href="/vendor/affiliates">
+                                <i class="fas fa-eye mx-3" style="width:10px"></i>
+                                <span>View affiliates</span>
+                            </a>
+                            <a class="menu-item d-flex align-items-center text-muted" href="/vendor/registerAffiliate">
+                                <i class="fas fa-plus mx-3" style="width:10px"></i>
+                                <span>Register affiliate</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="bottom col-sm-3">
+                        <!-- logo -->
+                        <div class="container-fluid logo p-0">
+                            <img src="{{ asset('assets/images/surepay_logo.png') }}" class="img-fluid"/>
+                        </div>
                     </div>
                 </div>
 
                 <!-- right-->
-                <div class="col-md-10 vh-100 overflow-auto">
+                <div class="col-md-10 vh-100 overflow-auto" style="background-color: #EAFDFC">
                     <!-- customer info -->
-                    <div class="row">
+                    <div class="row top-bar">
                         <div class="container-fluid d-flex flex-row-reverse">
                             <a href="/vendor/signout" style="margin-left: 10px;" data-toggle="tooltip" data-placement="top" title="Sign out">
                                 <i class="fas fa-power-off text-danger" style="margin-right: 10px; padding-top: 5px"></i>

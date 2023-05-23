@@ -7,28 +7,28 @@
 @section('content')
         <div class="container my-4">
                 <div class="row d-flex flex-row mx-1" style="gap:20px">
-                        <div class="my-card mx-3" style="flex:1; height:150px">
-                                <h5 class="text-dark mt-3 text-decoration-underline">System Users</h5>
-                                <h1 class=" text-primary mt-2 d-flex align-items-center"><i class="fa fa-users text-dark" style="margin-right: 10px; font-size:18px"></i>{{ session('users')[0]->users }}</h1>
+                        <div class="my-card mx-3" style="flex:1; height:150px; background-color: #6C00FF">
+                                <h5 class="text-white mt-3 text-decoration-underline">System Users</h5>
+                                <h1 class=" text-warning mt-2 d-flex align-items-center"><i class="fa fa-users text-dark" style="margin-right: 10px; font-size:18px"></i>{{ session('users')[0]->users }}</h1>
                                 <h6 class="text-muted mt-3">All active</h6>
                         </div>
-                        <div class="my-card" style="flex:1; height:150px">
-                                <h5 class="text-dark mt-3 text-decoration-underline">Message Count</h5>
-                                <h1 class=" text-success mt-2 d-flex align-items-center"><i class="fa fa-comments text-dark" style="margin-right: 10px; font-size:18px"></i>{{ session('messages')[0]->messages }}</h1>
+                        <div class="my-card" style="flex:1; height:150px; background-color: #3C79F5"">
+                                <h5 class="text-white mt-3 text-decoration-underline">Message Count</h5>
+                                <h1 class=" text-warning mt-2 d-flex align-items-center"><i class="fa fa-comments text-dark" style="margin-right: 10px; font-size:18px"></i>{{ session('messages')[0]->messages }}</h1>
                                 <h6 class="text-muted mt-3">Last 30 days</h6>
                         </div>
-                        <div class="my-card" style="flex:1; height:150px">
-                                <h5 class="text-dark mt-3 text-decoration-underline">Transactions</h5>
+                        <div class="my-card" style="flex:1; height:150px; background-color: #2DCDDF">
+                                <h5 class="text-danger mt-3 text-decoration-underline">Transactions</h5>
                                 <h1 class=" text-warning mt-2 d-flex align-items-center"><i class="fa fa-money-bill-transfer text-dark" style="margin-right: 10px; font-size:18px"></i>{{ session('transactions')[0]->transactions }}</h1>
                                 <h6 class="text-muted mt-3">Last 30 days</h6></div>
-                        <div class="my-card" style="flex:1; height:150px">
+                        <div class="my-card" style="flex:1; height:150px; background-color: #F2DEBA">
                                 <h5 class="text-dark mt-3 text-decoration-underline">Rate</h5>
                                 <h1 class=" text-danger mt-2 d-flex align-items-center"><i class="fa fa-money-bill text-dark" style="margin-right: 10px; font-size:18px"></i>{{ session('vendor')[0]->rate }}</h1>
                                 <h6 class="text-muted mt-3">SMS Credits</h6>
                         </div>
                 </div>
-                <div class="row mx-2 my-4">
-                        <div class="container" id="myPlot"></div>
+                <div class="row mx-2 mt-2">
+                        <div class="container" style="width: 95% !important" id="myPlot"></div>
                 </div>
         </div>
 @endsection
@@ -36,7 +36,7 @@
 <style>
     .my-card{
         border-radius: 2px;
-        box-shadow: 1px 1px 2px 2px grey;
+        /* box-shadow: 1px 1px 2px 2px grey; */
     }
 </style>
 
@@ -59,7 +59,7 @@
                 // Define Layout
                 var layout = {
                 xaxis: {range: [0, 30], title: "Days"},
-                yaxis: {range: [0, max], title: "SMS"},  
+                yaxis: {range: [0, max], title: "SMS"},
                 title: "Sms Last 30 days"
                 };
 

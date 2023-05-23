@@ -5,7 +5,10 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Pagination\Paginator;
 use App\Models\message;
+use App\Models\transaction;
 
 class vendorController extends Controller
 {
@@ -18,8 +21,16 @@ class vendorController extends Controller
         $email = $request->email;
         $password = $request->password;
         $user = DB::select("select * from user  left join vendor on(user.vendorId = vendor.vendorId) where user.email = ? and user.pwd = ?", [$email, $password]);
+
         // var_dump($user);
         if($user){
+            $vendorId = $user[0]->vendorId;
+            $users = DB::select("select count(userId) as users from user where vendorId = ?", [$vendorId]);
+            $transactions = DB::select("select count(transaction_id) as transactions from transaction where vendorId = ? and created_at >= DATE_SUB(NOW(), INTERVAL 30 DAY);", [$vendorId]);
+            $messages = DB::select("select count(messageId) as messages from message where vendorId = ? and created_at >= DATE_SUB(NOW(), INTERVAL 30 DAY);", [$vendorId]);
+            session(['users'=> $users]);
+            session(['transactions'=> $transactions]);
+            session(['messages'=> $messages]);
             session(['user'=> $user]);
             return redirect("/user/home");
         }else{
@@ -37,7 +48,7 @@ class vendorController extends Controller
             $vendorId = $vendor[0]->vendorId;
             $users = DB::select("select count(userId) as users from user where vendorId = ?", [$vendorId]);
             $transactions = DB::select("select count(transaction_id) as transactions from transaction where vendorId = ? and created_at >= DATE_SUB(NOW(), INTERVAL 30 DAY);", [$vendorId]);
-            $messages = DB::select("select count(messageId) as messages from messages where clientId = ? and created_at >= DATE_SUB(NOW(), INTERVAL 30 DAY);", [$vendorId]);
+            $messages = DB::select("select count(messageId) as messages from message where vendorId = ? and created_at >= DATE_SUB(NOW(), INTERVAL 30 DAY);", [$vendorId]);
             session(['vendor'=> $vendor]);
             session(['users'=> $users]);
             session(['transactions'=> $transactions]);
@@ -100,7 +111,7 @@ class vendorController extends Controller
 
     function loadOutBox(){
         $userId = session('user')[0]->userId;
-        $messages = DB::select("SELECT * FROM message WHERE userId = $userId ORDER BY created_at DESC");
+        $messages = message::where('userId', $userId)->orderBy('created_at', 'DESC')->paginate(12);
         return view("user.outbox", ['messages' => $messages, 'userId' => $userId]);
     }
 
@@ -196,7 +207,9 @@ class vendorController extends Controller
 
     function getTransactions(){
         $this->refreshVendor();
-        $transactions = DB::select("select * from transaction where vendorId = ? order by transaction_id desc", [session('vendor')[0]->vendorId]);
+        $vendorId = session('vendor')[0]->vendorId;
+        $transactions = transaction::where('vendorId', $vendorId)->orderBy('created_at', 'desc')->paginate(10);
+        // $transactions = DB::select("select * from transaction where vendorId = ? order by transaction_id desc", [session('vendor')[0]->vendorId]);
         return view("/vendor/transactions", ['transactions' => $transactions]);
     }
 
