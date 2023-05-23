@@ -5,7 +5,7 @@
 @section('content')
     <div class="container-fluid">
         <div class="row">
-            <h5>Transactions: <span class="text-danger">{{ sizeof($transactions) }}</span></h5>
+            <h5>Transactions: <span class="text-danger">{{ $transactions->total() }}</span></h5>
         </div>
         <div class="row">
             <table class="table table-striped table-bordered table-condensed">
@@ -16,8 +16,8 @@
                         <th>Type</th>
                         <th>userId</th>
                         <th>Amount</th>
-                        <th>credits before</th>
-                        <th>credits after</th>
+                        <th>$_before</th>
+                        <th>$_after</th>
                         <th>Details</th>
                         <th>status</th>
                         <th>created_at</th>
@@ -43,6 +43,9 @@
                     @endforeach
                 </tbody>
             </table>
+        </div>
+        <div class="col">
+            {{ $transactions->appends(request()->except('page'))->links('pagination::bootstrap-4') }}
         </div>
     </div>
 @endsection

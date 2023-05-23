@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\transaction;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Pagination\Paginator;
 
 class adminController extends Controller
 {
@@ -15,10 +17,10 @@ class adminController extends Controller
         if($admin){
             session(['admin'=> $admin]);
             if(strcasecmp("maker", $admin[0]->role) == 0){
-                return redirect("/admin/maker/home");
+                return redirect("/admin/vendors");
             }
             else if(strcasecmp("checker", $admin[0]->role) == 0){
-                return redirect("/admin/checker/home");
+                return redirect("/admin/vendors");
             }
             return redirect("/admin/home");
         }else{
@@ -128,8 +130,9 @@ class adminController extends Controller
 
     function getTransactions(){
         $admin = session("admin");
-        $transactions = DB::select("select * from transaction ORDER BY created_at DESC");
-        echo $admin[0]->role;
+        // $transactions = new Paginator(transaction::all(), 10);
+        $transactions = $transactions = transaction::orderByDesc('created_at')->paginate(10);
+        // echo $admin[0]->role;
         if(strcasecmp("maker", $admin[0]->role) == 0){
             return view("/admin/maker/transactions", ['transactions' => $transactions]);
         }
@@ -144,7 +147,6 @@ class adminController extends Controller
     function getPendingTransactions(){
         $admin = session("admin");
         $transactions = DB::select("select * from transaction where status = ? ORDER BY created_at DESC", ["pending"]);
-        echo $admin[0]->role;
         if(strcasecmp("maker", $admin[0]->role) == 0){
             return view("/admin/maker/transactions", ['transactions' => $transactions]);
         }
@@ -159,7 +161,6 @@ class adminController extends Controller
     function getSuccessfullTransactions(){
         $admin = session("admin");
         $transactions = DB::select("select * from transaction where status = ? ORDER BY created_at DESC", ["success"]);
-        echo $admin[0]->role;
         if(strcasecmp("maker", $admin[0]->role) == 0){
             return view("/admin/maker/transactions", ['transactions' => $transactions]);
         }
@@ -174,12 +175,11 @@ class adminController extends Controller
     function getRejectedTransactions(){
         $admin = session("admin");
         $transactions = DB::select("select * from transaction where status = ? ORDER BY created_at DESC", ["rejected"]);
-        echo $admin[0]->role;
         if(strcasecmp("maker", $admin[0]->role) == 0){
             return view("/admin/maker/transactions", ['transactions' => $transactions]);
         }
         else if(strcasecmp("checker", $admin[0]->role) == 0){
-            return view("/admin/checker/transactions", ['transactions' => $transactions]);
+            return view("/admin/checker/rejectedTransactions", ['transactions' => $transactions]);
         }
         return view("/admin/maker/transactions", ['transactions' => $transactions]);
     }

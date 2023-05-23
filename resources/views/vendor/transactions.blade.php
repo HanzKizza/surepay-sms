@@ -5,7 +5,7 @@
 @section('content')
     <div class="container-fluid">
         <div class="row">
-            <h5>Transactions: <span class="text-danger">{{ sizeof($transactions) }}</span></h5>
+            <h5>Transactions: <span class="text-danger">{{ $transactions->total() }}</span></h5>
         </div>
         <div class="row">
             <table class="table table-striped table-bordered table-condensed">
@@ -37,8 +37,8 @@
                            <td>{{ $transaction->creditsAfter }}</td>
                            <td>{{ $transaction->details }}</td>
                            <td>{{ $transaction->status }}</td>
-                           <td>{{ $transaction->created_at }}</td>
-                           <td>{{ $transaction->updated_at }}</td>
+                           <td><small>{{ $transaction->created_at }}</small></td>
+                           <td><small>{{ $transaction->updated_at }}</small></td>
                         </tr>
                     @endforeach
                 </tbody>
